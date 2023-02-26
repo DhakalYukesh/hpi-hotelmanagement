@@ -1,0 +1,179 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+/* Set default font family and color */
+
+:root {
+    --background-color1: rgb(246, 246, 246);
+    --background-color2: rgba(246, 246, 246, 0.935);
+    --red: #ee1d1d;
+    --border-color: #760b0be1;
+    --outline: .1rem solid rgba(0,0,0,.1);
+    --outline-hover: .2rem solid var(--red);
+    --border-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);
+}
+
+*{
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-transform: capitalize;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    transition: all 0.2s linear;
+    /* align-items: center; */
+}
+
+.header{
+    height: 88px;
+    background: #2d0c0c;
+    /* box-shadow: 1px 1px 10px rgba(214, 212, 212, 0.6); */
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 9%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+header .logo {
+    font-size:1.6rem;
+    font-weight: bolder;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+header .logo span {
+    font-size: 1.6rem;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: var(--red);
+}
+
+header .navbar a:hover {
+    color: var(--red);
+}
+
+body{
+    max-width: 100%;
+    background-color: var(--background-color2);
+    overflow-x: hidden;
+}
+
+.header .logo, .header .account_circle{
+    display: flex;
+    align-items: center;
+    color: #fff;
+}
+
+.header .account_circle .material-symbols-outlined{
+    color: #fff;
+    font-size: 2rem;
+    cursor: pointer;
+}
+
+.main-container {
+    width: 100vw;
+    height: calc(100vh -70px);
+    position: relative;
+    display: flex;
+    top: 86px;
+}
+
+.main-container .nav-container{
+    height: calc(100vh -70px);
+    width: 250px;
+    box-shadow: 1px 1px 10px rgb(88, 84, 84);
+    /* overflow-y: scroll; */
+    /* overflow-x: hidden; */
+    position: relative;
+    
+}
+
+.nav-container::-webkit-scrollbar{
+    display: none;
+}
+
+.main-container .nav-container .nav {
+    /* display: flex; */
+    flex-direction: column;
+    justify-content: space-between;
+    width: 250px;
+    min-height: 100vh;
+    background-color: #2d0c0cee;
+    /* position: absolute; */
+    top: 0;
+    left: 0;
+    padding: 30px 0 20px 10px;
+    overflow: hidden;
+}
+
+.main-container .nav-container .nav .nav-option,.main-container .nav-container .nav .room-options{
+    display: flex;
+    align-items: center;
+    width: 250px;
+    height: 60px;
+    padding: 0 30px 0 20px;
+    gap: 20px;
+    cursor: pointer;
+}
+
+.main-container .nav-container .nav .room-options{
+    background-color: #fff;
+    border-bottom: 1px solid #ddd;
+    color: #2d0c0c;
+}
+
+.main-container .nav-container .nav .room-options:hover{
+    background-color: #ffffffda;
+}
+
+/* .main-container .nav-container .nav a .room-options{
+    color: #2d0c0c;
+    cursor: pointer;
+} */
+
+
+.main-container .nav-container .nav .nav-option:hover{
+    background-color: var(--red);
+}
+
+.main-container .nav-container .nav .nav-option:not(:first-child) span{
+    font-size: 22px;
+    color: var(--background-color2);
+}
+
+.main-container .nav-container .nav .nav-option:first-child span{
+    color: #fff;
+}
+
+.main-container .nav-container .nav .nav-option h3{
+    color: #fff;
+    font-size: 18px;
+}
+
+.main-container .nav-container .nav .nav-option:first-child h3{
+    color: white;
+    font-size: 18px;
+}
+
+.main-container .nav-container .nav .nav-option .option1{
+    background-color: var(--red);
+}
+
+.nav-option .option1 #room-options{
+    background-color: #fff;
+}
+
+.right-main-container{
+    width: 100%;
+}
+
+/* signin */
+

@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins&display=swap");
+/* Set default font family and color */
+
+:root {
+    --background-color1: rgb(246, 246, 246);
+    --background-color2: rgba(246, 246, 246, 0.935);
+    --red: #ee1d1d;
+    --border-color: #760b0be1;
+    --outline: .1rem solid rgba(0,0,0,.1);
+    --outline-hover: .2rem solid var(--red);
+    --border-shadow: 0 .5rem 1.5rem rgba(0,0,0,.1);
+}
+
+*{
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    text-transform: capitalize;
+    outline: none;
+    border: none;
+    text-decoration: none;
+    transition: all 0.2s linear;
+    color: #333;
+    align-items: center;
+}
+
+.header{
+    height: 88px;
+    background: #2d0c0c;
+    /* box-shadow: 1px 1px 10px rgba(214, 212, 212, 0.6); */
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.6rem 9%;
+    /* position: fixed; */
+    top: 0;
+    left: 0;
+    right: 0;
+}
+
+header .logo {
+    font-size:1.6rem;
+    font-weight: bolder;
+    color: #fff;
+    text-transform: uppercase;
+    cursor: pointer;
+    border: none;
+    outline: none;
+}
+
+header .logo span {
+    font-size: 1.6rem;
+    font-weight: bolder;
+    text-transform: uppercase;
+    color: var(--red);
+}
+
+header .navbar a:hover {
+    color: var(--red);
+}
+
+body{
+    max-width: 100%;
+    background-color: #fff;
+    overflow-x: hidden;
+}
+
+
+/* signin */
+
+.signin-form-container{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10000;
+    min-height: 100vh;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.signin-form-container.active{
+    top: 0;
+}
+
+.signin-form-container form{
+    margin: 5.8rem;
+    padding: 2.5rem 3rem;
+    border-radius: .8rem;
+    background-color: #ffffff;
+    width: 52rem;
+    box-shadow: var(--border-shadow);
+    border-radius: .5rem;
+}
+
+.signin-form-container form h3{
+    font-size: 1.8rem;
+    color: var(--red);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1.3rem 0;
+}
+
+.signin-form-container form .box{
+    width: 100%;
+    padding: 1.3rem;
+    font-size: 1rem;
+    color: #333;
+    margin: 0.6rem 0;
+    border: 0.1rem solid #2d0c0c53;
+    border-radius: 0.8rem;
+    text-transform: none;
+}
+
+.signin-form-container form .box:focus{
+    border-color: var(--red);
+}
+
+.signin-form-container form #remember{
+    margin: 1.8rem 0;
+}
+
+.signin-form-container form label, .register-form-container form label{
+    font-size: 1rem;
+}
+
+.signin-form-container form .log-btn{
+    display: block;
+    width: 100%;
+    padding: 1.3rem;
+    font-size: 1.1rem;
+    margin: 0.6rem 0;
+    background-color: var(--red);
+    color: #fff;
+    border-radius: 0.5rem;
+    cursor: pointer;
+}
+
+.signin-form-container form .log-btn:hover{
+    background-color: #cb1919;
+}
