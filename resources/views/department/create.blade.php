@@ -46,7 +46,6 @@
 
         .content-table th {
             text-align: left;
-            padding: 10px;
         }
 
         .content-table tbody tr {
@@ -63,9 +62,7 @@
         .content-table textarea {
             background: #e9e9e9d3;
             width: 100%;
-            padding-top: 20px;
-            height: 110px;
-            text-align: center;
+            padding: 10px;
             font-size: 16px;
         }
 
@@ -115,35 +112,68 @@
             color: #fff;
             padding: 1rem;
         }
+
+        .danger {
+            color: #ee1d1d;
+            font-size: 14px;
+        }
+
+        .content-table td .select-form {
+            width: 100%;
+            background: #e9e9e9d3;
+            padding: .8rem;
+            margin-bottom: 1px;
+            font-size: 15px;
+        }
+
+        .content-table td .select-form option {
+            background: #fff;
+        }
     </style>
 
     <div class="main">
-        <h3>Customers Info
-            <a href="{{ url('admin/customer') }}" class="view-rooms">View Customers</a>
-        </h3>
+        <form method="post" action="{{ url('admin/department') }}">
+            <h3>Add Department
+                <a href="{{ url('admin/department/') }}" class="view-rooms">View Departments</a>
+            </h3>
+            @if (Session::has('success'))
+                <div class="alert-success" id="alert-success">{{ Session::get('success') }}</div>
+            @endif
 
-        @csrf
-        <table class="content-table">
-            <tr>
-                <th>First Name</th>
-                <td>{{ $data->fname }}</td>
-            </tr>
-            <tr>
-                <th>Last Name</th>
-                <td>{{ $data->lname }}</td>
-            </tr>
-            <tr>
-                <th>Phone Number</th>
-                <td>{{ $data->number }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ $data->email }}</td>
-            </tr>
-            <tr>
-                <th>Password</th>
-                <td>{{ $data->password }}</td>
-            </tr>
-        </table>
+            @if (Session::has('fail'))
+                <div class="alert-fail" id="alert-fail">{{ Session::get('fail') }}</div>
+            @endif
+
+            @csrf
+            <table class="content-table">
+                <tr>
+                    <th>Title</th>
+                    <td>
+                        <span class="danger">
+                            @error('title')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="text" class="room-form" name="title" value="{{ old('title') }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Details</th>
+                    <td>
+                        <span class="danger">
+                            @error('detail')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <textarea type="text" class="room-form" name="detail" value="{{ old('detail') }}"></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2">
+                        <button type="submit" class="btn">Add Department</button>
+                    </td>
+                </tr>
+            </table>
+        </form>
     </div>
 @endsection

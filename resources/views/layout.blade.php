@@ -59,14 +59,19 @@
                     </div>
                 </a>
 
-                <div class="nav-option option1">
-                    <span class="material-symbols-outlined">badge</span>
-                    <h3>Staff</h3>
-                </div>
-                <div class="nav-option option1">
-                    <span class="material-symbols-outlined">local_fire_department</span>
-                    <h3>Department</h3>
-                </div>
+                <a href="{{ url('admin/staff') }}">
+                    <div class="nav-option option1">
+                        <span class="material-symbols-outlined">badge</span>
+                        <h3>Staff</h3>
+                    </div>
+                </a>
+
+                <a href="{{ url('admin/department') }}">
+                    <div class="nav-option option1">
+                        <span class="material-symbols-outlined">local_fire_department</span>
+                        <h3>Department</h3>
+                    </div>
+                </a>
                 <div class="nav-option option1">
                     <span class="material-symbols-outlined">wb_iridescent</span>
                     <h3>Services</h3>

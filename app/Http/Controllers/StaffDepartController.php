@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\RoomType;
+use App\Models\Department;
 
-class RoomtypeController extends Controller
+class StaffDepartController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class RoomtypeController extends Controller
      */
     public function index()
     {
-        $data=RoomType::all();
-        return view('roomtype.index',['data'=>$data]);
+        $data=Department::all();
+        return view('department.index',['data'=>$data]);
     }
 
     /**
@@ -24,8 +24,8 @@ class RoomtypeController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('roomtype.create');
+    {   
+        return view('department.create');
     }
 
     /**
@@ -36,22 +36,15 @@ class RoomtypeController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'title'=>'required|string',
-            'price'=>'required|string',
-            'detail'=>'required|string'
-        ]);
-
-        $data = new RoomType;
+        $data = new Department;
         $data->title = $request->title;
-        $data->price = $request->price;
-        $data->detail= $request->detail;
+        $data->detail = $request->detail;
         $data->save();
 
         if($data){
-            return redirect('admin/roomtype/create')->with('success', 'The room type has been added successfully!');
+            return redirect('admin/department/create')->with('success', 'The department has been added successfully!');
         } else {
-            return redirect('admin/roomtype/create')->with('fail', 'Something went wrong! Try again.');
+            return redirect('admin/department/create')->with('fail', 'Something went wrong! Try again.');
         }
     }
 
@@ -63,8 +56,8 @@ class RoomtypeController extends Controller
      */
     public function show($id)
     {
-        $data=RoomType::find($id);
-        return view('roomtype.show',['data'=>$data]);
+        $data=Department::find($id);
+        return view('department.show',['data'=>$data]);
     }
 
     /**
@@ -75,9 +68,8 @@ class RoomtypeController extends Controller
      */
     public function edit($id)
     {
-
-        $data=RoomType::find($id);
-        return view('roomtype.edit',['data'=>$data]);
+        $data=Department::find($id);
+        return view('department.edit',['data'=>$data]);
 
     }
 
@@ -90,22 +82,15 @@ class RoomtypeController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'title'=>'required|string',
-            'price'=>'required|string',
-            'detail'=>'required|string'
-        ]);
-
-        $data = RoomType::find($id);
+        $data = Department::find($id);
         $data->title = $request->title;
-        $data->price = $request->price;
-        $data->detail= $request->detail;
+        $data->detail = $request->detail;
         $data->save();
 
         if($data){
-            return redirect('admin/roomtype/'.$id.'/edit')->with('success', 'The room type has been updated successfully!');
+            return redirect('admin/department/'.$id.'/edit')->with('success', 'The department has been updated successfully!');
         } else {
-            return redirect('admin/roomtype/'.$id.'/edit')->with('fail', 'Something went wrong! Try again.');
+            return redirect('admin/department/'.$id.'/edit')->with('fail', 'Something went wrong! Try again.');
         }
     }
 
@@ -117,8 +102,8 @@ class RoomtypeController extends Controller
      */
     public function destroy($id)
     {
-        RoomType::where('id',$id)->delete();
+        Department::where('id',$id)->delete();
 
-        return redirect('admin/roomtype')->with('success', 'The room type has been deleted successfully!');
+        return redirect('admin/department')->with('success', 'The department has been deleted successfully!');
     }
 }

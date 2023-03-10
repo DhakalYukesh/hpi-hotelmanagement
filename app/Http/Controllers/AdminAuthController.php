@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Admin;
 use Hash;
+use Cookie;
 
 class AdminAuthController extends Controller
 {
@@ -28,6 +29,11 @@ class AdminAuthController extends Controller
         if ($admin>0){
             $admin_data=Admin::where(['username'=>$request->username, 'password'=>sha1($request->password)])->get();
             session(['admin_data'=>$admin_data]);
+
+            if($request->has('rememberme')){
+                Cookie::queue('adminUser', $request->username,1440);
+                Cookie::queue('adminPass', $request->password,1440);
+            }
 
             return redirect('admin/dashboard')->with('success', 'You have successfully loged in!');
 

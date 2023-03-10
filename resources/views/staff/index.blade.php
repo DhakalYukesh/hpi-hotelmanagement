@@ -136,8 +136,8 @@
     </style>
 
     <div class="main">
-        <h3>Available Customers
-            <a href="{{ url('admin/customer/create') }}" class="add-rooms">Add Customers</a>
+        <h3>Available Staffs
+            <a href="{{ url('admin/staff/create') }}" class="add-rooms">Add Staffs</a>
         </h3>
 
         @if (Session::has('success'))
@@ -154,8 +154,8 @@
                     <th>ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Salary Amount</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -164,8 +164,8 @@
                     <th>ID</th>
                     <th>First Name</th>
                     <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
+                    <th>Department</th>
+                    <th>Salary Amount</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -176,12 +176,12 @@
                         <td>{{$dt->id}}</td>
                         <td>{{$dt->fname}}</td>
                         <td>{{$dt->lname}}</td>
-                        <td>{{$dt->number}}</td>
-                        <td>{{$dt->email}}</td>
+                        <td>{{$dt->department->title}}</td>
+                        <td>{{$dt->salary_amount}}</td>
                         <td>
-                            <a href="{{url('admin/customer/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
-                            <a href="{{url('admin/customer/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>
-                            <a onclick="return confirm('(!) Are you sure you want to delete this room type?')" href="{{url('admin/roomtype/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
+                            <a href="{{url('admin/staff/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
+                            <a href="{{url('admin/staff/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>
+                            <a onclick="return confirm('(!) Are you sure you want to delete this staff?')" href="{{url('admin/staff/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
                                     id="delete">delete</span></a>
                         </td>
                     </tr>

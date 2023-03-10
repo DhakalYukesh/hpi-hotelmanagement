@@ -3,9 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Customer;
+use App\Models\Staff;
+use App\Models\Department;
 
-class CustomerController extends Controller
+class StaffController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +15,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data=Customer::all();
-        return view('customer.index',['data'=>$data]);
+        $data=Staff::all();
+        return view('staff.index',['data'=>$data]);
     }
 
     /**
@@ -24,8 +25,9 @@ class CustomerController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {
-        return view('customer.create');
+    {   
+        $departments = Department::all();
+        return view('staff.create',['departments'=>$departments]);
     }
 
     /**
@@ -36,26 +38,19 @@ class CustomerController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'fname'=>'required|string',
-            'lname'=>'required|string',
-            'number'=>'required|max:10',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|min:5|max:12',
-        ]);
-
-        $data = new Customer;
+        $data = new Staff;
         $data->fname = $request->fname;
         $data->lname = $request->lname;
-        $data->number = $request->number;
+        $data->department_id = $request->department_id;
         $data->email = $request->email;
-        $data->password = sha1($request->password);
+        $data->salary_type = $request->salary_type;
+        $data->salary_amount = $request->salary_amount;
         $data->save();
 
         if($data){
-            return redirect('admin/customer/create')->with('success', 'The room type has been added successfully!');
+            return redirect('admin/staff/create')->with('success', 'The staff has been added successfully!');
         } else {
-            return redirect('admin/customer/create')->with('fail', 'Something went wrong! Try again.');
+            return redirect('admin/staff/create')->with('fail', 'Something went wrong! Try again.');
         }
     }
 
@@ -67,8 +62,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $data=Customer::find($id);
-        return view('customer.show',['data'=>$data]);
+        $data=Staff::find($id);
+        return view('staff.show',['data'=>$data]);
     }
 
     /**
@@ -79,9 +74,9 @@ class CustomerController extends Controller
      */
     public function edit($id)
     {
-
-        $data=Customer::find($id);
-        return view('customer.edit',['data'=>$data]);
+        $departments = Department::all();
+        $data=Staff::find($id);
+        return view('staff.edit',['data'=>$data,'departments'=>$departments]);
 
     }
 
@@ -94,24 +89,19 @@ class CustomerController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $request->validate([
-            'fname'=>'required|string',
-            'lname'=>'required|string',
-            'number'=>'required|max:10',
-            'email'=>'required|email|unique:users',
-        ]);
-
-        $data = Customer::find($id);
+        $data = Staff::find($id);
         $data->fname = $request->fname;
         $data->lname = $request->lname;
-        $data->number = $request->number;
+        $data->department_id = $request->department_id;
         $data->email = $request->email;
+        $data->salary_type = $request->salary_type;
+        $data->salary_amount = $request->salary_amount;
         $data->save();
 
         if($data){
-            return redirect('admin/customer/'.$id.'/edit')->with('success', 'The room type has been updated successfully!');
+            return redirect('admin/staff/'.$id.'/edit')->with('success', 'The staff has been updated successfully!');
         } else {
-            return redirect('admin/customer/'.$id.'/edit')->with('fail', 'Something went wrong! Try again.');
+            return redirect('admin/staff/'.$id.'/edit')->with('fail', 'Something went wrong! Try again.');
         }
     }
 
@@ -123,9 +113,9 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        Customer::where('id',$id)->delete();
+        Staff::where('id',$id)->delete();
 
-        return redirect('admin/customer')->with('success', 'The room type has been deleted successfully!');
+        return redirect('admin/staff')->with('success', 'The staff has been deleted successfully!');
     }
 }
 

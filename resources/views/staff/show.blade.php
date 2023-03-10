@@ -118,31 +118,35 @@
     </style>
 
     <div class="main">
-        <h3>Customers Info
-            <a href="{{ url('admin/customer') }}" class="view-rooms">View Customers</a>
+        <h3>Staffs Info
+            <a href="{{ url('admin/staff') }}" class="view-rooms">View Staffs</a>
         </h3>
 
         @csrf
         <table class="content-table">
             <tr>
                 <th>First Name</th>
-                <td>{{ $data->fname }}</td>
+                <td>{{$data->fname}}</td>
             </tr>
             <tr>
                 <th>Last Name</th>
-                <td>{{ $data->lname }}</td>
+                <td>{{$data->lname}}</td>
             </tr>
             <tr>
-                <th>Phone Number</th>
-                <td>{{ $data->number }}</td>
+                <th>Department</th>
+                <td>{{$data->department->title}}</td>
             </tr>
             <tr>
                 <th>Email</th>
-                <td>{{ $data->email }}</td>
+                <td>{{$data->email}}</td>
             </tr>
             <tr>
-                <th>Password</th>
-                <td>{{ $data->password }}</td>
+                <th>Salary Type</th>
+                <td>{{$data->salary_type}}</td>
+            </tr>
+            <tr>
+                <th>Salary Amount</th>
+                <td>{{$data->salary_amount}}</td>
             </tr>
         </table>
     </div>

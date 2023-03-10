@@ -26,14 +26,14 @@
                 <div class="alert-fail" id="alert-fail">{{Session::get('fail')}}</div>
                 @endif
 
-                <input type="text" id="username" class="box" placeholder="Enter your username..." name="username" value="{{old('email')}}">
+                <input type="text" id="username" class="box" placeholder="Enter your username..." name="username" @if(Cookie::has('adminUser')) value="{{Cookie::get('adminUser')}}" @endif>
                 <span class="danger">@error('text') {{$message}} @enderror</span>
 
-                <input type="password" id="password" class="box" placeholder="Enter your password..." name="password" value="">
+                <input type="password" id="password" class="box" placeholder="Enter your password..." name="password" @if(Cookie::has('adminPass')) value="{{Cookie::get('adminPass')}}" @endif>
                 <span class="danger">@error('password') {{$message}} @enderror</span>
 
                 <button type="submit" value="Login" class="log-btn">Sign In</button>
-                <input type="checkbox" id="remember">
-                <label for="remember">Remember me</label>
+                <input type="checkbox" name="rememberme" id="remember" @if(Cookie::has('adminUser')) checked @endif>
+                <label for="remember" >Remember me</label>
             </form>
         </div>

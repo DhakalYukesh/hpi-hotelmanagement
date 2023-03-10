@@ -145,6 +145,13 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Price</th>
+                    <td>
+                        <span class="danger">@error('price') {{$message}} @enderror</span>
+                        <input value="{{$data->price}}" type="text" class="room-form" name="price">
+                    </td>
+                </tr>
+                <tr>
                     <th>Details</th>
                     <td>
                         <span class="danger">@error('detail') {{$message}} @enderror</span>

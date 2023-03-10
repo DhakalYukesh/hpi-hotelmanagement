@@ -6,6 +6,8 @@ use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomtypeController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\StaffDepartController;
+use App\Http\Controllers\StaffController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +45,15 @@ Route::get('admin/room/{id}/delete',[RoomController::class,'destroy']);
 // Customer Route
 Route::resource('admin/customer',CustomerController::class);
 Route::get('admin/customer/{id}/delete',[CustomerController::class,'destroy']);
+
+// Staff Route
+Route::resource('admin/staff',StaffController::class);
+Route::get('admin/staff/{id}/delete',[StaffController::class,'destroy']);
+
+// Department Route
+Route::resource('admin/department',StaffDepartController::class);
+Route::get('admin/department/{id}/delete',[StaffDepartController::class,'destroy']);
+
 
 
 Route::get('home', function() {

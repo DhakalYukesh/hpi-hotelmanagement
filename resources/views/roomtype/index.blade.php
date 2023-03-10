@@ -153,6 +153,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Price</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -160,6 +161,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Price</th>
                     <th>Action</th>
                 </tr>
             </tfoot>
@@ -169,6 +171,7 @@
                     <tr>
                         <td>{{$dt->id}}</td>
                         <td>{{$dt->title}}</td>
+                        <td>{{$dt->price}}</td>
                         <td>
                             <a href="{{url('admin/roomtype/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
                             <a href="{{url('admin/roomtype/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>

@@ -6,9 +6,7 @@ ham.addEventListener("click", () => {
 });
 
 // Defining variables for form close action.
-let formBtn = document.querySelector("#login-btn");
 let formSignin = document.querySelector(".signin-form-container");
-let formClose = document.querySelector("#close-form");
 
 // Defining variables for responsive navigation.
 let menu = document.querySelector("#menuBar");
@@ -54,12 +52,4 @@ imgBtn.forEach((btn) => {
 menu.addEventListener("click", () => {
     menu.classList.toggle("fa-times");
     navbar.classList.toggle("active");
-});
-
-formBtn.addEventListener("click", () => {
-    formSignin.classList.add("active");
-});
-
-formClose.addEventListener("click", () => {
-    formSignin.classList.remove("active");
 });

@@ -119,12 +119,24 @@
             color: #ee1d1d;
             font-size: 14px;
         }
+
+        .content-table td .select-form {
+            width: 100%;
+            background: #e9e9e9d3;
+            padding: .8rem;
+            margin-bottom: 1px;
+            font-size: 15px;
+        }
+
+        .content-table td .select-form option {
+            background: #fff;
+        }
     </style>
 
     <div class="main">
-        <form method="post" action="{{ url('admin/customer/'.$data->id) }}">
-            <h3>Edit Customers
-                <a href="{{ url('admin/customer/') }}" class="view-rooms">View Customers</a>
+        <form method="post" action="{{ url('admin/staff/'.$data->id) }}">
+            <h3>Edit Staff
+                <a href="{{ url('admin/staff/') }}" class="view-rooms">View Staffs</a>
             </h3>
             @if (Session::has('success'))
                 <div class="alert-success" id="alert-success">{{ Session::get('success') }}</div>
@@ -140,41 +152,80 @@
                 <tr>
                     <th>First Name</th>
                     <td>
-                        <span class="danger">@error('fname') {{$message}} @enderror</span>
-                        <input value="{{$data->fname}}" type="text" class="room-form" name="fname">
+                        <span class="danger">
+                            @error('fname')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="text" class="room-form" name="fname" value="{{$data->fname}}">
                     </td>
                 </tr>
                 <tr>
                     <th>Last Name</th>
                     <td>
-                        <span class="danger">@error('lname') {{$message}} @enderror</span>
-                        <input value="{{$data->lname}}" type="text" class="room-form" name="lname">
+                        <span class="danger">
+                            @error('lname')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="text" class="room-form" name="lname" value="{{$data->lname}}">
                     </td>
                 </tr>
                 <tr>
-                    <th>Phone Number</th>
+                    <th>Department</th>
                     <td>
-                        <span class="danger">@error('number') {{$message}} @enderror</span>
-                        <input value="{{$data->number}}" type="text" class="room-form" name="number">
+                        <span class="danger">
+                            @error('department_id')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <select class="select-form" name="department_id">
+                            <option value="0">Select the department type</option>
+                            @foreach ($departments as $depart)
+                                <option  @if($data->department_id==$depart->id) selected @endif value="{{$depart->id}}">
+                                    {{ $depart->title }}
+                                </option>
+                            @endforeach
+                        </select>
                     </td>
                 </tr>
                 <tr>
                     <th>Email</th>
                     <td>
-                        <span class="danger">@error('email') {{$message}} @enderror</span>
-                        <input value="{{$data->email}}" type="text" class="room-form" name="email">
+                        <span class="danger">
+                            @error('email')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="email" class="room-form" name="email" value="{{$data->email}}">
                     </td>
                 </tr>
-                {{-- <tr>
-                    <th>Password</th>
+                <tr>
+                    <th>Salary Type</th>
                     <td>
-                        <span class="danger">@error('password') {{$message}} @enderror</span>
-                        <input value="{{$data->password}}" type="text" class="room-form" name="password">
+                        <span class="danger">
+                            @error('salary_type')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input @if($data->salary_type=='weekly') checked @endif type="radio" name="salary_type" value="weekly">Weekly
+                        <input @if($data->salary_type=='monthly') checked @endif type="radio" name="salary_type" value="monthly">Monthly
                     </td>
-                </tr> --}}
+                </tr>
+                <tr>
+                    <th>Salary Amount</th>
+                    <td>
+                        <span class="danger">
+                            @error('salary_amount')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="text" class="room-form" name="salary_amount" value="{{$data->salary_amount}}">
+                    </td>
+                </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" class="btn">Update Customers</button>
+                        <button type="submit" class="btn">Update Staff</button>
                     </td>
                 </tr>
             </table>
