@@ -20,7 +20,7 @@
         <!-- Registration section for the page. -->
         <section class="register" id="register">
             <div class="register-form-container">
-                <form action="{{route('register-user')}}" method="post">
+                <form action="{{url('admin/customer')}}" method="post">
                     <h3>Register In</h3>
                     @if(Session::has('success'))
                     <div class="alert-success" id="alert-success">{{Session::get('success')}}</div>
@@ -51,8 +51,9 @@
                         <input type="password" class="box" placeholder="Set your password..." name="password" value="">
                         <span class="danger">@error('password') {{$message}} @enderror</span>
                     </div>
+                    <input type="hidden" name="reg_ref" value="frontRegister" />
                     <input type="submit" value="Create Account" class="btn">
-                    <p>Already have an account? <a href="home">Login Here</a></p>
+                    <p>Already have an account? <a href="{{url('home')}}">Login Here</a></p>
                 </form>
             </div>
         </section>

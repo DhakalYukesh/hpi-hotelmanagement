@@ -136,8 +136,8 @@
     </style>
 
     <div class="main">
-        <h3>Available Customers
-            <a href="{{ url('admin/customer/create') }}" class="add-rooms">Add Customers</a>
+        <h3>Available Services
+            <a href="{{ url('admin/service/create') }}" class="add-rooms">Add Service</a>
         </h3>
 
         @if (Session::has('success'))
@@ -152,10 +152,8 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Phone Number</th>
-                    <th>Email</th>
+                    <th>Title</th>
+                    <th>Price</th>
                     <th>Action</th>
                 </tr>
             </thead>
@@ -164,14 +162,12 @@
                     @foreach ($data as $dt)
                     <tr>
                         <td>{{$dt->id}}</td>
-                        <td>{{$dt->fname}}</td>
-                        <td>{{$dt->lname}}</td>
-                        <td>{{$dt->number}}</td>
-                        <td>{{$dt->email}}</td>
+                        <td>{{$dt->title}}</td>
+                        <td>{{$dt->price}}</td>
                         <td>
-                            <a href="{{url('admin/customer/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
-                            <a href="{{url('admin/customer/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>
-                            <a onclick="return confirm('(!) Are you sure you want to delete this room type?')" href="{{url('admin/roomtype/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
+                            <a href="{{url('admin/service/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
+                            <a href="{{url('admin/service/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>
+                            <a onclick="return confirm('(!) Are you sure you want to delete this service?')" href="{{url('admin/service/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
                                     id="delete">delete</span></a>
                         </td>
                     </tr>

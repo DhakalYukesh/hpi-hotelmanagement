@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Customer;
+use Hash;
+use Session;
 
 class CustomerController extends Controller
 {
@@ -14,8 +16,8 @@ class CustomerController extends Controller
      */
     public function index()
     {
-        $data=Customer::all();
-        return view('customer.index',['data'=>$data]);
+        $data = Customer::all();
+        return view('customer.index', ['data' => $data]);
     }
 
     /**
@@ -37,11 +39,11 @@ class CustomerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'fname'=>'required|string',
-            'lname'=>'required|string',
-            'number'=>'required|max:10',
-            'email'=>'required|email|unique:users',
-            'password'=>'required|min:5|max:12',
+            'fname' => 'required|string',
+            'lname' => 'required|string',
+            'number' => 'required|max:10',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:5|max:12',
         ]);
 
         $data = new Customer;
@@ -49,13 +51,22 @@ class CustomerController extends Controller
         $data->lname = $request->lname;
         $data->number = $request->number;
         $data->email = $request->email;
-        $data->password = sha1($request->password);
-        $data->save();
+        $data->password = Hash::make($request->password);
 
-        if($data){
-            return redirect('admin/customer/create')->with('success', 'The room type has been added successfully!');
+        if ($data->save()) {
+            $reg_ref = $request->reg_ref;
+            if ($reg_ref == 'frontRegister') {
+                return redirect('registration')->with('success', 'You have registered successfully!');
+            } else {
+                return redirect('admin/customer/create')->with('success', 'The customer has been added successfully!');
+            }
         } else {
-            return redirect('admin/customer/create')->with('fail', 'Something went wrong! Try again.');
+            $reg_ref = $request->reg_ref;
+            if ($reg_ref == 'frontRegister') {
+                return redirect('registration')->with('fail', 'Something went wrong! Try again.');
+            } else {
+                return redirect('admin/customer/create')->with('fail', 'Something went wrong! Try again.');
+            }
         }
     }
 
@@ -67,8 +78,8 @@ class CustomerController extends Controller
      */
     public function show($id)
     {
-        $data=Customer::find($id);
-        return view('customer.show',['data'=>$data]);
+        $data = Customer::find($id);
+        return view('customer.show', ['data' => $data]);
     }
 
     /**
@@ -80,8 +91,8 @@ class CustomerController extends Controller
     public function edit($id)
     {
 
-        $data=Customer::find($id);
-        return view('customer.edit',['data'=>$data]);
+        $data = Customer::find($id);
+        return view('customer.edit', ['data' => $data]);
 
     }
 
@@ -95,10 +106,10 @@ class CustomerController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'fname'=>'required|string',
-            'lname'=>'required|string',
-            'number'=>'required|max:10',
-            'email'=>'required|email|unique:users',
+            'fname' => 'required|string',
+            'lname' => 'required|string',
+            'number' => 'required|max:10',
+            'email' => 'required|email|unique:users',
         ]);
 
         $data = Customer::find($id);
@@ -108,10 +119,10 @@ class CustomerController extends Controller
         $data->email = $request->email;
         $data->save();
 
-        if($data){
-            return redirect('admin/customer/'.$id.'/edit')->with('success', 'The room type has been updated successfully!');
+        if ($data) {
+            return redirect('admin/customer/' . $id . '/edit')->with('success', 'The room type has been updated successfully!');
         } else {
-            return redirect('admin/customer/'.$id.'/edit')->with('fail', 'Something went wrong! Try again.');
+            return redirect('admin/customer/' . $id . '/edit')->with('fail', 'Something went wrong! Try again.');
         }
     }
 
@@ -123,9 +134,46 @@ class CustomerController extends Controller
      */
     public function destroy($id)
     {
-        Customer::where('id',$id)->delete();
+        Customer::where('id', $id)->delete();
 
         return redirect('admin/customer')->with('success', 'The room type has been deleted successfully!');
     }
-}
 
+    //User login functionality
+    public function login()
+    {
+        return view("home");
+    }
+
+    public function loginCustomer(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required|min:5|max:12',
+        ]);
+
+        $data = Customer::where('email', '=', $request->email)->first();
+        if ($data) {
+            if (Hash::check($request->password, $data->password)) {
+                $request->session()->put('loginId', $data->id);
+                $request->session()->put('fname', $data->fname);
+                return redirect('home');
+            } else {
+                return back()->with('fail', 'The password was not correct! Try again.');
+            }
+        } else {
+            return back()->with('fail', 'The email was not correct! Try again.');
+        }
+    }
+
+    public function registration()
+    {
+        return view("registration");
+    }
+
+    public function logout()
+    {
+        session()->forget(['loginId', 'data']);
+        return redirect('home');
+    }
+}

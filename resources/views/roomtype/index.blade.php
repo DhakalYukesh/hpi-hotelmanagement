@@ -148,7 +148,7 @@
             <div class="alert-fail" id="alert-fail">{{ Session::get('fail') }}</div>
         @endif
 
-        <table class="content-table">
+        <table class="content-table" id="Table_ID">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -157,14 +157,6 @@
                     <th>Action</th>
                 </tr>
             </thead>
-            <tfoot>
-                <tr>
-                    <th>ID</th>
-                    <th>Title</th>
-                    <th>Price</th>
-                    <th>Action</th>
-                </tr>
-            </tfoot>
             <tbody>
                 @if ($data)
                     @foreach ($data as $dt)

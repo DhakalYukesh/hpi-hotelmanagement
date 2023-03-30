@@ -5,8 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Department extends Model
+class Service extends Model
 {
     use HasFactory;
 
+    public function bookings()
+    {
+        return $this->belongsToMany(Booking::class);
+    }
 }

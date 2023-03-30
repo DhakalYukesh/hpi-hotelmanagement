@@ -1,13 +1,17 @@
 <?php
 
+use App\Http\Controllers\PaymentController;
+use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CustomAuthController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\RoomtypeController;
 use App\Http\Controllers\AdminAuthController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\StaffDepartController;
 use App\Http\Controllers\StaffController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -46,6 +50,19 @@ Route::get('admin/room/{id}/delete',[RoomController::class,'destroy']);
 Route::resource('admin/customer',CustomerController::class);
 Route::get('admin/customer/{id}/delete',[CustomerController::class,'destroy']);
 
+// Booking Route
+Route::resource('admin/booking',BookingController::class);
+Route::get('admin/booking/{id}/delete',[BookingController::class,'destroy']);
+Route::get('admin/booking/{id}/checkedIn',[BookingController::class,'checkedin']);
+Route::get('admin/booking/{id}/checkedOut',[BookingController::class,'checkedout']);
+Route::get('admin/booking/{id}/invoice',[BookingController::class, 'generateInvoice']);
+Route::get('booking/availableRooms/{check_in}/{num_days}', [BookingController::class, 'available_Rooms'])->name('booking.availableRooms');
+
+// Service Route
+Route::resource('admin/service',ServiceController::class);
+Route::get('admin/service/{id}/delete',[ServiceController::class,'destroy']);
+
+
 // Staff Route
 Route::resource('admin/staff',StaffController::class);
 Route::get('admin/staff/{id}/delete',[StaffController::class,'destroy']);
@@ -54,16 +71,26 @@ Route::get('admin/staff/{id}/delete',[StaffController::class,'destroy']);
 Route::resource('admin/department',StaffDepartController::class);
 Route::get('admin/department/{id}/delete',[StaffDepartController::class,'destroy']);
 
+// User Booking - Frontend
+Route::get('booking',[BookingController::class, 'booking']);
 
+// Payment gateaway
+Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
+Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
+
+// Route::get('/booking/checkout', [BookingController::class, 'store'])->name('booking.checkout');
+// Route::post('/payment/checkout', 'BookingController@store')->name('booking.store');
 
 Route::get('home', function() {
     return view('home');
 });
 
-Route::get('/', [CustomAuthController::class, 'login']);
-Route::get('/registration', [CustomAuthController::class, 'registration']);
-Route::post('/register-user', [CustomAuthController::class, 'registerUser'])->name('register-user');
-Route::post('login-user', [CustomAuthController::class, 'loginUser'])->name('login-user'); 
+Route::get('booking/success', [BookingController::class, 'success'])->name('booking.success');
+Route::get('booking/error', [BookingController::class, 'error'])->name('booking.error');
 
-// Route::get('/home',[CustomAuthController::class, 'home']);
-// Route::get('/logout',[CustomAuthController::class, 'logout']);
+
+Route::get('/', [CustomerController::class, 'login']);
+Route::post('/customer/login', [CustomerController::class, 'loginCustomer']);
+Route::get('/registration', [CustomerController::class, 'registration']);
+Route::get('/logout', [CustomerController::class, 'logout']);

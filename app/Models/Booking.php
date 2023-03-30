@@ -18,4 +18,13 @@ class Booking extends Model
     function room(){
         return $this->belongsTo(Room::class);
     }
+
+    public function payment(){
+        return $this->hasOne(Payment::class);
+    }
+
+    public function services()
+    {
+        return $this->belongsToMany(Service::class);
+    }
 }

@@ -28,15 +28,21 @@
             <a href="#contact">Contact</a>
         </nav>
 
-        <div class="signIn">
-            <button id="login-btn">SignIn</button>
-        </div>
+        @if (Session::has('loginId'))
+            <div class="logout">
+                <a id="logout-btn" href="{{ url('logout') }}">Logout</a>
+            </div>
+        @else
+            <div class="signIn">
+                <button id="login-btn">SignIn</button>
+            </div>
+        @endif
     </header>
 
     <!-- Login section for the page. -->
     <div class="signin-form-container">
         <span class="material-symbols-outlined" id="close-form">close</span>
-        <form action="{{ route('login-user') }}" method="post">
+        <form action="{{ url('customer/login') }}" method="post">
             @csrf
             <h3>Sign In</h3>
             @if (Session::has('success'))
@@ -99,7 +105,12 @@
                 <h3>Single Suite</h3>
                 <p>A comfortable and affordable option for solo travelers, offering a cozy
                     and private space with a single bed, a private bathroom, and essential amenities.</p>
-                <a href="#" class="btn">Book Now</a>
+
+                @if (Session::has('loginId'))
+                    <a href="{{ url('booking') }}" class="btn">Book Now</a>
+                @else
+                    <a href="#" class="btn notbookbutton">Book Now</a>
+                @endif
             </div>
 
             <div class="box">
@@ -107,7 +118,12 @@
                 <h3>Double Suite</h3>
                 <p>A perfect choice for couples or friends, providing a spacious and inviting
                     space with a large double bed or two twin beds, private bathroom, and modern amenities.</p>
-                <a href="#" class="btn">Book Now</a>
+
+                @if (Session::has('loginId'))
+                    <a href="{{ url('booking') }}" class="btn">Book Now</a>
+                @else
+                    <a href="#" class="btn notbookbutton">Book Now</a>
+                @endif
             </div>
 
             <div class="box">
@@ -115,7 +131,12 @@
                 <h3>Deluxe Suite</h3>
                 <p>A luxurious and upscale option for travelers who seek an exceptional experience,
                     offering a spacious and elegantly decorated room with a king-size bed.</p>
-                <a href="#" class="btn">Book Now</a>
+
+                @if (Session::has('loginId'))
+                    <a href="{{ url('booking') }}" class="btn">Book Now</a>
+                @else
+                    <a href="#" class="btn notbookbutton">Book Now</a>
+                @endif
             </div>
         </div>
         </div>
@@ -244,6 +265,12 @@
     formClose.addEventListener("click", () => {
         formSignin.classList.remove("active");
     });
+
+    let notbook = document.querySelector('.notbookbutton')
+    notbook.addEventListener('click', () => {
+        formBtn.click()
+    })
+    
 </script>
 
 <script src="{{ asset('public/js/main.js') }}"></script>

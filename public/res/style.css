@@ -110,7 +110,7 @@ header .navbar a:hover {
     color: var(--red);
 }
 
-header .signIn #login-btn {
+header .signIn #login-btn{
     display: inline-block;
     padding: 10px 20px;
     font-size: 1.8rem;
@@ -124,7 +124,25 @@ header .signIn #login-btn {
     text-transform: capitalize;
 }
 
-header .signIn #login-btn:hover {
+header .logout #logout-btn{
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 1.8rem;
+    text-align: center;
+    color: #fff;
+    background-color: transparent;
+    border: none;
+    border-radius: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    text-transform: capitalize;
+}
+
+header .signIn #login-btn:hover{
+    background-color: var(--red);
+}
+
+header .logout #logout-btn:hover{
     background-color: var(--red);
 }
 
@@ -659,15 +677,5 @@ header .signIn #login-btn:hover {
         padding: 1.5rem;
         margin: 1.5rem 0;
         background: #551313;
-    } */
-}
-
-/* @media(max-width:450px){
-    html {
-        font-size: 50%;
-    }
-
-    .heading{
-        font-size: 2.5rem;
     }
 }

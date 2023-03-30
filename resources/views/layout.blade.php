@@ -11,6 +11,7 @@
     @endif
 
     <link href="{{ asset('public/res/adminStyle.css') }}" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
@@ -59,23 +60,41 @@
                     </div>
                 </a>
 
+                <a href="{{ url('admin/booking/') }}">
+                    <div class="nav-option option1">
+                        <span class="material-symbols-outlined">book</span>
+                        <h3>Bookings</h3>
+                    </div>
+                </a>
+
                 <a href="{{ url('admin/staff') }}">
                     <div class="nav-option option1">
                         <span class="material-symbols-outlined">badge</span>
-                        <h3>Staff</h3>
+                        <h3>Staffs</h3>
                     </div>
                 </a>
 
                 <a href="{{ url('admin/department') }}">
                     <div class="nav-option option1">
                         <span class="material-symbols-outlined">local_fire_department</span>
-                        <h3>Department</h3>
+                        <h3>Departments</h3>
                     </div>
                 </a>
-                <div class="nav-option option1">
-                    <span class="material-symbols-outlined">wb_iridescent</span>
-                    <h3>Services</h3>
-                </div>
+
+                <a href="{{ url('admin/food') }}">
+                    <div class="nav-option option1">
+                        <span class="material-symbols-outlined">restaurant</span>
+                        <h3>Foods</h3>
+                    </div>
+                </a>
+
+                <a href="{{ url('admin/service') }}">
+                    <div class="nav-option option1">
+                        <span class="material-symbols-outlined">wb_iridescent</span>
+                        <h3>Services</h3>
+                    </div>
+                </a>
+
                 <a href="{{ url('admin/logout') }}">
                     <div class="nav-option option1">
                         <span class="material-symbols-outlined">logout</span>
@@ -91,6 +110,15 @@
         </div>
 
     </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+    @yield('scripts')
+    <script>
+        $(document).ready(function() {
+            $('#Table_ID').DataTable();
+        });
+    </script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ ham.addEventListener("click", () => {
 });
 
 // Defining variables for form close action.
-let formSignin = document.querySelector(".signin-form-container");
+// let formSignin = document.querySelector(".signin-form-container");
 
 // Defining variables for responsive navigation.
 let menu = document.querySelector("#menuBar");
