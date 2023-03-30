@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Food extends Model
 {
     use HasFactory;
+
+    public function bookings()
+    {
+        return $this->belongsToMany(Booking::class)->withPivot('quantity');
+    }
 }

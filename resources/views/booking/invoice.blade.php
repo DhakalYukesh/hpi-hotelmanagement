@@ -131,11 +131,15 @@
             </tr>
             <tr>
                 <td>Customer:</td>
-                <td>{{ $booking->customer_name }}</td>
+                <td>{{ $booking->customer->id }}</td>
             </tr>
-            {{-- <tr>
+            <tr>
                 <td>Room:</td>
-                <td>{{ $booking->room->name }}</td>
+                <td>{{ $booking->room->title }}</td>
+            </tr>
+            <tr>
+                <td>Room Type:</td>
+                <td>{{ $booking->room->roomtype->title }}</td>
             </tr>
             <tr>
                 <td>Check In:</td>
@@ -158,17 +162,22 @@
                 <td>
                     <ul>
                         @foreach ($booking->services as $service)
-                            <li>{{ $service->title }} ({{ $service->price }})</li>
+                            <li>{{ $service->title }} (${{ $service->price }})</li>
                         @endforeach
                     </ul>
                 </td>
             </tr>
             <tr>
                 <td>Total Amount:</td>
-                <td>{{ $booking->total_amount }}</td>
+                <td> {{ $payment->amount }}</td>
+
+                @if($payment->payment_status == 'paid')
+                <td>Amount left to pay:</td>
+                <td> $0</td>
+                @else
+                <td>test</td>
+                @endif
             </tr>
-        </table> --}}
-
-
+        </table>
     </div>
 @endsection

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;
@@ -55,13 +56,19 @@ Route::resource('admin/booking',BookingController::class);
 Route::get('admin/booking/{id}/delete',[BookingController::class,'destroy']);
 Route::get('admin/booking/{id}/checkedIn',[BookingController::class,'checkedin']);
 Route::get('admin/booking/{id}/checkedOut',[BookingController::class,'checkedout']);
-Route::get('admin/booking/{id}/invoice',[BookingController::class, 'generateInvoice']);
+Route::get('admin/booking/{id}/invoice',[BookingController::class, 'invoice']);
+Route::get('admin/booking/{id}/gen_invoice',[BookingController::class, 'generateInvoice']);
+Route::get('admin/booking/{id}/food',[BookingController::class, 'food']);
 Route::get('booking/availableRooms/{check_in}/{num_days}', [BookingController::class, 'available_Rooms'])->name('booking.availableRooms');
 
 // Service Route
 Route::resource('admin/service',ServiceController::class);
 Route::get('admin/service/{id}/delete',[ServiceController::class,'destroy']);
 
+// Food Route
+Route::resource('admin/food',FoodController::class);
+Route::post('admin/booking/{id}/food', [FoodController::class, 'handleOrder']);
+Route::get('admin/food/{id}/delete',[FoodController::class,'destroy']);
 
 // Staff Route
 Route::resource('admin/staff',StaffController::class);

@@ -48,6 +48,12 @@
             text-align: left;
         }
 
+        .content-table tr #total_price {
+            padding-top: 0.8rem;
+            padding-bottom: 0.8rem;
+            padding-right: 0.8rem;
+        }
+
         .content-table tbody tr {
             border-bottom: 1px solid #dddd;
         }
@@ -132,9 +138,9 @@
     </style>
 
     <div class="main">
-        <form method="post" action="{{ url('admin/food') }}">
-            <h3>Add Food
-                <a href="{{ url('admin/food/') }}" class="view-rooms">View Foods</a>
+        <form method="post" action="{{ url('admin/booking/' . $booking->id) . '/food' }}">
+            <h3>Add Food Order
+                <a href="{{ url('admin/booking/') }}" class="view-rooms">View Bookings</a>
             </h3>
             @if (Session::has('success'))
                 <div class="alert-success" id="alert-success">{{ Session::get('success') }}</div>
@@ -145,27 +151,24 @@
             @endif
 
             @csrf
-            <table class="content-table">
+            <table class="content-table" id="food-list">
                 <tr>
-                    <th>Title</th>
+                    <th>Available Foods</th>
                     <td>
                         <span class="danger">
-                            @error('title')
+                            @error('food_id')
                                 {{ $message }}
                             @enderror
                         </span>
-                        <input type="text" class="room-form" name="title" value="{{ old('title') }}">
-                    </td>
-                </tr>
-                <tr>
-                    <th>Description</th>
-                    <td>
-                        <span class="danger">
-                            @error('description')
-                                {{ $message }}
-                            @enderror
-                        </span>
-                        <input type="text" class="room-form" name="description" value="{{ old('description') }}">
+                        <select class="select-form" name="food_id" value="{{ old('food_id') }}">
+                            <option value="0" id="food">Select the food</option>
+                            @foreach ($foods as $food)
+                                <option value="{{ $food->id }}">
+                                    {{ $food->title }} (${{ $food->price }} per 1)
+                                </option>
+                            @endforeach
+                        </select>
+                        </select>
                     </td>
                 </tr>
                 <tr>
@@ -176,22 +179,50 @@
                                 {{ $message }}
                             @enderror
                         </span>
-                        <input type="text" class="room-form" name="quantity" value="{{ old('quantity') }}">
+                        <input type="text" class="room-form" name="quantity" value=""
+                            id="quantity">
                     </td>
                 </tr>
                 <tr>
-                    <th>Price</th>
-                    <td>
-                        <span class="danger">@error('price') {{$message}} @enderror</span>
-                        <input type="text" class="room-form" name="price" value="{{old('price')}}">
-                    </td>
+                    <th>Total Food Price:</th>
+                    <td id="total_price" value="">$NaN</td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" class="btn">Add Food</button>
+                        <button type="submit" class="btn">Add Order</button>
                     </td>
                 </tr>
             </table>
+            <input type="hidden" name="booking_id" value="{{ $booking->id }}">
         </form>
     </div>
+
+    <script>
+        // Get references to the HTML elements
+        const quantityInput = document.getElementById("quantity");
+        const foodSelect = document.getElementsByName("food_id")[0];
+        const totalFoodPrice = document.getElementById("total_price");
+
+        // Listen for changes to the quantity input and food select fields
+        quantityInput.addEventListener("change", updatePrice);
+        foodSelect.addEventListener("change", updatePrice);
+
+        // Function to update the total food price based on the selected food and quantity
+        function updatePrice() {
+            // Get the selected food option
+            const foodOption = foodSelect.options[foodSelect.selectedIndex];
+
+            // Get the price of the selected food
+            const foodPrice = parseFloat(foodOption.textContent.match(/\$(\d+)/)[1]);
+
+            // Get the quantity entered by the user
+            const quantity = parseInt(quantityInput.value);
+
+            // Calculate the total price based on the food price and user quantity
+            const totalPrice = foodPrice * quantity;
+
+            // Update the UI to show the total price
+            totalFoodPrice.textContent = `$${totalPrice}`;
+        }
+    </script>
 @endsection

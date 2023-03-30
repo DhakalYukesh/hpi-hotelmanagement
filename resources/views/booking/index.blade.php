@@ -58,8 +58,8 @@
         }
 
         /* .content-table tbody:last-of-type tr {
-                                border-bottom: 2px solid #ee1d1d;
-                            } */
+                                                border-bottom: 2px solid #ee1d1d;
+                                            } */
 
         .content-table tbody tr td a #view {
             background: #e08422;
@@ -114,7 +114,7 @@
         }
 
         .content-table tbody tr td a #checkedout {
-            background: #1eb478;
+            background: #930404;
             color: white;
             padding: 3px;
             border-radius: 7px;
@@ -122,11 +122,12 @@
         }
 
         .content-table tbody tr td a #checkedout:hover {
-            background: #167e54;
+            background: #720404;
             font-size: 1.25rem;
         }
+
         .content-table tbody tr td a #invoice {
-            background: #3d190be2;
+            background: #0c1194fc;
             color: white;
             padding: 3px;
             border-radius: 7px;
@@ -134,11 +135,12 @@
         }
 
         .content-table tbody tr td a #invoice:hover {
-            background: #2b1108;
+            background: #080b5dfc;
             font-size: 1.25rem;
         }
+
         .content-table tbody tr td a #food {
-            background: #116f9bf3;
+            background: #5b119bf3;
             color: white;
             padding: 3px;
             border-radius: 7px;
@@ -146,7 +148,7 @@
         }
 
         .content-table tbody tr td a #food:hover {
-            background: #0f5e83f3;
+            background: #460d77f3;
             font-size: 1.25rem;
         }
 
@@ -221,10 +223,13 @@
                             <td>{{ $book->check_out }}</td>
                             <td>{{ $book->book_ref }}</td>
                             <td
-                                style="background: #127cc81b;
-                            border-bottom: 4px solid #1d79e2;
-                            ">
+                                @if ($book->status == 'booked') style="background: #41b82925; border-bottom: 4px solid #2ec018;"
+                            @elseif($book->status == 'checked in')
+                                style="background: #93040429; border-bottom: 4px solid #720404;"
+                            @else
+                                style="background: #0c11941a; border-bottom: 4px solid #0c1194fc;" @endif>
                                 {{ $book->status }}</td>
+
                             <td>
                                 @if ($book->status == 'booked')
                                     <a onclick="return confirm('(!) Are you sure you want to check in this booking?')"
@@ -242,8 +247,6 @@
                                     </a>
                                 @endif
 
-                                <a href="{{ url('admin/booking/' . $book->id) . '/food' }}"><span class="material-symbols-outlined"
-                                        id="food">restaurant</span></a>
                                 <a href="{{ url('admin/booking/' . $book->id) }}"><span class="material-symbols-outlined"
                                         id="view">visibility</span></a>
                                 <a href="{{ url('admin/booking/' . $book->id) . '/edit' }}"><span
@@ -251,6 +254,10 @@
                                 <a onclick="return confirm('(!) Are you sure you want to delete this booking?')"
                                     href="{{ url('admin/booking/' . $book->id) . '/delete' }}" class="delete"><span
                                         class="material-symbols-outlined" id="delete">delete</span></a>
+                                @if ($book->status == 'checked in')
+                                    <a href="{{ url('admin/booking/' . $book->id) . '/food' }}"><span
+                                            class="material-symbols-outlined" id="food">restaurant</span></a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach

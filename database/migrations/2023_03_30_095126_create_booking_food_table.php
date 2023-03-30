@@ -3,10 +3,8 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Service;
-use App\Models\Booking;
 
-class CreateBookingServiceTable extends Migration
+class CreateBookingFoodTable extends Migration
 {
     /**
      * Run the migrations.
@@ -15,19 +13,18 @@ class CreateBookingServiceTable extends Migration
      */
     public function up()
     {
-        Schema::create('booking_service', function (Blueprint $table) {
-
-            $table->id();
+        Schema::create('booking_food', function (Blueprint $table) {
             $table->string('booking_id');
-            $table->string('service_id');
+            $table->string('food_id');
+            $table->string('quantity')->default(1);
             $table->string('price');
-            $table->timestamps();
-
+            
             $table->foreign('booking_id')->references('id')->on('bookings')->onDelete('cascade');
-            $table->foreign('service_id')->references('id')->on('services')->onDelete('cascade');
+            $table->foreign('food_id')->references('id')->on('foods')->onDelete('cascade');
+            $table->primary(['booking_id', 'food_id']);
         });
+        
     }
-
 
     /**
      * Reverse the migrations.
@@ -36,6 +33,6 @@ class CreateBookingServiceTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('booking_service');
+        Schema::dropIfExists('booking_food');
     }
 }
