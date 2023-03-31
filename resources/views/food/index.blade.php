@@ -136,8 +136,8 @@
     </style>
 
     <div class="main">
-        <h3>Available Services
-            <a href="{{ url('admin/service/create') }}" class="add-rooms">Add Service</a>
+        <h3>Available Foods
+            <a href="{{ url('admin/food/create') }}" class="add-rooms">Add Food</a>
         </h3>
 
         @if (Session::has('success'))
@@ -153,6 +153,7 @@
                 <tr>
                     <th>ID</th>
                     <th>Title</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                     <th>Action</th>
                 </tr>
@@ -163,11 +164,12 @@
                     <tr>
                         <td>{{$dt->id}}</td>
                         <td>{{$dt->title}}</td>
+                        <td>{{$dt->quantity}}</td>
                         <td>{{$dt->price}}</td>
                         <td>
-                            <a href="{{url('admin/service/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
-                            <a href="{{url('admin/service/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>
-                            <a onclick="return confirm('(!) Are you sure you want to delete this service?')" href="{{url('admin/service/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
+                            <a href="{{url('admin/food/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
+                            <a href="{{url('admin/food/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>
+                            <a onclick="return confirm('(!) Are you sure you want to delete this food?')" href="{{url('admin/food/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
                                     id="delete">delete</span></a>
                         </td>
                     </tr>

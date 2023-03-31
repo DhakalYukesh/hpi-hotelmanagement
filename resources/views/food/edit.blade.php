@@ -134,9 +134,9 @@
     </style>
 
     <div class="main">
-        <form method="post" action="{{ url('admin/service/' . $data->id) }}">
-            <h3>Edit Service
-                <a href="{{ url('admin/service/') }}" class="view-rooms">View Services</a>
+        <form method="post" action="{{ url('admin/food/' . $data->id) }}">
+            <h3>Edit Food
+                <a href="{{ url('admin/food/') }}" class="view-rooms">View Foods</a>
             </h3>
             @if (Session::has('success'))
                 <div class="alert-success" id="alert-success">{{ Session::get('success') }}</div>
@@ -161,6 +161,28 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Description</th>
+                    <td>
+                        <span class="danger">
+                            @error('description')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="text" class="room-form" name="description" value="{{ $data->description }}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Quantity</th>
+                    <td>
+                        <span class="danger">
+                            @error('quantity')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="text" class="room-form" name="quantity" value="{{ $data->quantity }}">
+                    </td>
+                </tr>
+                <tr>
                     <th>Price</th>
                     <td>
                         <span class="danger">
@@ -172,19 +194,8 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Details</th>
-                    <td>
-                        <span class="danger">
-                            @error('detail')
-                                {{ $message }}
-                            @enderror
-                        </span>
-                        <textarea type="text" class="room-form" name="detail" value="{{ $data->detail }}"></textarea>
-                    </td>
-                </tr>
-                <tr>
                     <td colspan="2">
-                        <button type="submit" class="btn">Update Service</button>
+                        <button type="submit" class="btn">Update Food</button>
                     </td>
                 </tr>
             </table>

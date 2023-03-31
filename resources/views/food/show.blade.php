@@ -118,8 +118,8 @@
     </style>
 
     <div class="main">
-        <h3>Service Info
-            <a href="{{ url('admin/service') }}" class="view-rooms">View Services</a>
+        <h3>Food Info
+            <a href="{{ url('admin/food') }}" class="view-rooms">View Foods</a>
         </h3>
 
         @csrf
@@ -130,7 +130,11 @@
             </tr>
             <tr>
                 <th>Details</th>
-                <td>{{$data->detail}}</td>
+                <td>{{$data->description}}</td>
+            </tr>
+            <tr>
+                <th>Details</th>
+                <td>{{$data->quantity}}</td>
             </tr>
             <tr>
                 <th>Price</th>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FoodController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ServiceController;
 use Illuminate\Support\Facades\Route;

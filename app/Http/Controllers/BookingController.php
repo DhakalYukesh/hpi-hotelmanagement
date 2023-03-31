@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Food;
 use App\Models\Room;
+use Dompdf\Options;
 use PDF;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -228,10 +230,16 @@ class BookingController extends Controller
 
     public function generateInvoice(Booking $booking)
     {
-        $pdf = PDF::loadView('booking.invoice', ['booking' => $booking]);
+        $options = [
+            'fontDir' => storage_path('fonts/'),
+            'fontCache' => storage_path('fonts/'),
+            'defaultFont' => 'poppins',
+        ];
+
+        $pdf = PDF::setOptions($options)->loadView('booking.generateinvoice', compact('booking'));
         return $pdf->stream('booking_invoice.pdf');
     }
-    
+
     public function available_Rooms(Request $request, $check_in, $check_out)
     {
 

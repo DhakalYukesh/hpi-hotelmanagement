@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Booking;
+use App\Models\Food;
 use Illuminate\Http\Request;
 
 class FoodController extends Controller
@@ -13,7 +15,8 @@ class FoodController extends Controller
      */
     public function index()
     {
-        //
+        $data = Food::all();
+        return view('food.index', ['data' => $data]);
     }
 
     /**
@@ -23,7 +26,7 @@ class FoodController extends Controller
      */
     public function create()
     {
-        //
+        return view('food.create');
     }
 
     /**
@@ -34,7 +37,25 @@ class FoodController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'quantity' => 'required|string',
+            'price' => 'required|string',
+        ]);
+
+        $data = new Food;
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->quantity = $request->quantity;
+        $data->price = $request->price;
+        $data->save();
+
+        if ($data) {
+            return redirect('admin/food/create')->with('success', 'The food has been added successfully!');
+        } else {
+            return redirect('admin/food/create')->with('fail', 'Something went wrong! Try again.');
+        }
     }
 
     /**
@@ -45,7 +66,8 @@ class FoodController extends Controller
      */
     public function show($id)
     {
-        //
+        $data = Food::find($id);
+        return view('food.show', ['data' => $data]);
     }
 
     /**
@@ -56,7 +78,10 @@ class FoodController extends Controller
      */
     public function edit($id)
     {
-        //
+
+        $data = Food::find($id);
+        return view('food.edit', ['data' => $data]);
+
     }
 
     /**
@@ -68,7 +93,25 @@ class FoodController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'description' => 'required|string',
+            'quantity' => 'required|string',
+            'price' => 'required|string',
+        ]);
+
+        $data = Food::find($id);
+        $data->title = $request->title;
+        $data->description = $request->description;
+        $data->quantity = $request->quantity;
+        $data->price = $request->price;
+        $data->save();
+
+        if ($data) {
+            return redirect('admin/food/' . $id . '/edit')->with('success', 'The food has been updated successfully!');
+        } else {
+            return redirect('admin/food/' . $id . '/edit')->with('fail', 'Something went wrong! Try again.');
+        }
     }
 
     /**
@@ -79,7 +122,9 @@ class FoodController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Food::where('id', $id)->delete();
+
+        return redirect('admin/food')->with('success', 'The food has been deleted successfully!');
     }
 
     public function handleOrder(Request $request)
