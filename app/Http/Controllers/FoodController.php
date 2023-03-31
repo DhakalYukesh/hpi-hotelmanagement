@@ -81,4 +81,39 @@ class FoodController extends Controller
     {
         //
     }
+
+    public function handleOrder(Request $request)
+    {
+        $request->validate([
+            'booking_id' => 'required|integer',
+            'food_id' => 'required|integer',
+            'quantity' => 'required|integer|min:1',
+        ]);
+
+        $booking = Booking::findOrFail($request->input('booking_id'));
+        $food = Food::findOrFail($request->input('food_id'));
+        $quantity = $request->input('quantity');
+        $total_price = $quantity * $food->price;
+
+        // Ensure that the order quantity is not greater than the available food quantity
+        if ($food->quantity < $quantity) {
+            return redirect('admin/booking/' . $booking->id . '/food')->with('fail', 'The food is out of stock! Please choose another.');
+        }
+
+        // Update the food quantity
+        $food->quantity -= $quantity;
+        $food->save();
+
+        // Attach the food to the booking with the given quantity and price
+        $booking->foods()->attach($food, [
+            'quantity' => $quantity,
+            'price' => $total_price,
+        ]);
+
+        // Set payment_status to unpaid
+        $booking->payment->update(['payment_status' => 'unpaid']);
+
+        return redirect('admin/booking/' . $booking->id . '/food')->with('success', 'The food order has been added successfully!');
+    }
+
 }

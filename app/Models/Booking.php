@@ -27,4 +27,9 @@ class Booking extends Model
     {
         return $this->belongsToMany(Service::class);
     }
+
+    public function foods()
+    {
+        return $this->belongsToMany(Food::class)->withPivot('quantity');
+    }
 }

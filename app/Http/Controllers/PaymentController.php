@@ -23,7 +23,7 @@ class PaymentController extends Controller
 
         $params = [
             'cancelUrl' => route('payment.cancel'),
-            'returnUrl' => route('payment.success', ['booking_id' => $bookingId, 'total_price' => $totalPrice ]),
+            'returnUrl' => route('payment.success', ['booking_id' => $bookingId, 'total_price' => $totalPrice]),
             'amount' => $request->get('total_price'),
             'currency' => 'USD',
             'description' => 'Payment for Booking #' . $booking->id,
@@ -44,10 +44,10 @@ class PaymentController extends Controller
         $gateway->setClientId(env('PAYPAL_CLIENT_ID'));
         $gateway->setSecret(env('PAYPAL_CLIENT_SECRET'));
         $gateway->setTestMode(true);
-    
+
         $bookingId = $request->input('booking_id');
         $booking = Booking::findOrFail($bookingId);
-    
+
         $params = [
             'amount' => $request->get('total_price'),
             'currency' => 'USD',
@@ -55,19 +55,19 @@ class PaymentController extends Controller
             'transactionReference' => $request->input('paymentId'),
             'payerId' => $request->input('PayerID'),
         ];
-    
+
         $response = $gateway->completePurchase($params)->send();
-    
+
         if ($response->isSuccessful()) {
             // Create payment record
             $payment = new Payment();
             $payment->booking_id = $bookingId;
             $payment->amount = $request->get('total_price');
-            $payment->currency = 'USD'; 
             $payment->payment_id = $request->input('paymentId');
+            $payment->currency = 'USD';
             $payment->payment_status = 'paid';
             $payment->save();
-    
+
             // Show success message
             return 'Payment successful!';
         } else {
@@ -75,11 +75,34 @@ class PaymentController extends Controller
             return $response->getMessage();
         }
     }
-    
+
 
     public function cancel()
     {
         // Show cancel message
         return 'Payment cancelled!';
+    }
+
+
+    public function adminPayment(Request $request)
+    {
+        // $request->validate([
+        //     'booking_id' => 'required|integer',
+        //     'payment_id' => 'required|string',
+        //     'amount' => 'required|numeric',
+        //     'currency' => 'required|string',
+        // ]);
+
+        $bookingId = $request->input('booking_id');
+
+        $payment = new Payment();
+        $payment->booking_id = $bookingId;
+        $payment->payment_id = 'PAYID-ADMIN';
+        $payment->amount = $request->get('total_price');
+        $payment->currency = 'USD';
+        $payment->payment_status = 'paid';
+        $payment->save();
+
+        return redirect('admin/booking/create')->with('success', 'The booking has been added successfully!');
     }
 }

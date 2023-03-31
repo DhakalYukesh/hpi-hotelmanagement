@@ -21,6 +21,7 @@ class CreateBookingsTable extends Migration
             $table->string('check_out');
             $table->string('cus_adult');
             $table->string('cus_children');
+            $table->string('num_days');
             $table->string('book_ref');
             $table->timestamps();
         });

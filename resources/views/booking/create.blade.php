@@ -177,7 +177,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>Number of Days</th>
+                    <th>Days of Stay</th>
                     <td>
                         <span class="danger">
                             @error('num_days')
@@ -225,10 +225,30 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Service</th>
+                    <td>
+                        <span class="danger">
+                            @error('service')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        @foreach ($services as $service)
+                            <div class="service-option">
+                                <input type="checkbox" class="service-checkbox" name="services[]"
+                                    value="{{ $service->id }}">
+                                <label>{{ $service->title }} - ${{ $service->price }}</label>
+                            </div>
+                        @endforeach
+
+                    </td>
+                </tr>              
+                <tr>
                     <td colspan="2">
                         {{-- <input type="hidden" name="customer_id" value="{{ session('loginId') }}" /> --}}
                         {{-- <input type="hidden" name="book_ref" value="front_booking" /> --}}
                         <input type="hidden" name="roomprice" class="room_price" value="" />
+                        <input type="hidden" name="total_price" class="total_price" value="" />
+                        <p>Total Price: $<span class="total-price" id="total-price">0</span></p>
                         <button type="submit" class="btn">Add Booking</button>
                     </td>
                 </tr>
@@ -239,8 +259,13 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function() {
-            $(".check-in").on('blur', function() {
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
 
+            $(".check-in").on('blur', function() {
                 var checkinDate = $(this).val();
                 var numDays = $(".num-days").val();
 
@@ -265,20 +290,65 @@
                                     value.roomtype.price + '" value="' + value
                                     .room.id + '">' + value.roomtype.title + ' - ' +
                                     value.room.title + '</option>');
-
-
-                                // Show the price of the selected option. (Current option)
-                                var _selectedamount = $(".available-rooms").find(
-                                        'option:selected')
-                                    .attr('data_price');
-                                $(".room_price").val(_selectedamount);
-                                $(".showPrice").text(_selectedamount);
                             });
                         } else {
                             $('.available-rooms').append('<option>No room found</option>');
                         }
+
+                        // Call the function to update the total price
+                        calculateTotalPrice();
                     }
                 });
+
+                function calculateTotalPrice() {
+                    var totalPrice = 0;
+
+                    // Get the room price
+                    var roomPrice = parseFloat($('.available-rooms').find('option:selected').attr(
+                        'data_price'));
+                    $('.room_price').val(roomPrice);
+                    $('.showPrice').text(roomPrice);
+
+                    // Add the room price to the total
+                    totalPrice += roomPrice;
+
+                    // Loop through each checked service
+                    $('.service-checkbox:checked').each(function() {
+                        // Get the service price from the label text
+                        var servicePrice = parseFloat($(this).closest('.service-option').find(
+                            'label').text().replace(/\D/g, ''));
+
+                        // Add the service price to the total
+                        totalPrice += servicePrice;
+                    });
+
+                    // Update the total price on the page
+                    $('.total-price').text(totalPrice.toFixed(2));
+
+                    // Set the value of the hidden input field to the total price
+                    $('input[name="total_price"]').val(totalPrice);
+                }
+
+                // Update the total price when a checkbox is clicked
+                $('.service-checkbox').on('click', function() {
+                    calculateTotalPrice();
+                });
+
+                // Update the total price when the room price changes
+                $('.room_price').on('change', function() {
+                    calculateTotalPrice();
+                    var roomPrice = parseFloat($(this).val());
+                    $('.total-price').text(roomPrice.toFixed(2));
+                });
+
+                // Set the total price to the room price when the available room option is changed
+                $('.available-rooms').on('change', function() {
+                    var roomPrice = parseFloat($(this).find('option:selected').attr('data_price'));
+                    $('.room_price').val(roomPrice);
+                    $('.showPrice').text(roomPrice);
+                    calculateTotalPrice();
+                });
+
             });
 
             // Show the price of the selected option if the user changes their option.
@@ -290,5 +360,4 @@
         });
     </script>
 @endsection
-
 @endsection

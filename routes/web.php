@@ -55,13 +55,19 @@ Route::resource('admin/booking',BookingController::class);
 Route::get('admin/booking/{id}/delete',[BookingController::class,'destroy']);
 Route::get('admin/booking/{id}/checkedIn',[BookingController::class,'checkedin']);
 Route::get('admin/booking/{id}/checkedOut',[BookingController::class,'checkedout']);
-Route::get('admin/booking/{id}/invoice',[BookingController::class, 'generateInvoice']);
+Route::get('admin/booking/{id}/invoice',[BookingController::class, 'invoice']);
+Route::get('admin/booking/{id}/gen_invoice',[BookingController::class, 'generateInvoice']);
+Route::get('admin/booking/{id}/food',[BookingController::class, 'food']);
 Route::get('booking/availableRooms/{check_in}/{num_days}', [BookingController::class, 'available_Rooms'])->name('booking.availableRooms');
 
 // Service Route
 Route::resource('admin/service',ServiceController::class);
 Route::get('admin/service/{id}/delete',[ServiceController::class,'destroy']);
 
+// Food Route
+Route::resource('admin/food',FoodController::class);
+Route::post('admin/booking/{id}/food', [FoodController::class, 'handleOrder']);
+Route::get('admin/food/{id}/delete',[FoodController::class,'destroy']);
 
 // Staff Route
 Route::resource('admin/staff',StaffController::class);
@@ -76,6 +82,7 @@ Route::get('booking',[BookingController::class, 'booking']);
 
 // Payment gateaway
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment', [PaymentController::class, 'adminPayment'])->name('payment.admin_payment');
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 

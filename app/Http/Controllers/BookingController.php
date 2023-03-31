@@ -39,7 +39,8 @@ class BookingController extends Controller
     public function create()
     {
         $customer = Customer::all();
-        return view('booking.create', ['customer' => $customer]);
+        $services = Service::all();
+        return view('booking.create', ['customer' => $customer, "services" => $services]);
     }
 
     public function booking()
@@ -81,6 +82,7 @@ class BookingController extends Controller
         $data->check_out = $checkOutFormatted;
         $data->cus_adult = $request->cus_adult;
         $data->cus_children = $request->cus_children;
+        $data->num_days = $request->num_days;
         if ($request->book_ref == 'front_booking') {
             $data->book_ref = 'customer';
         } else {
@@ -112,7 +114,7 @@ class BookingController extends Controller
             }
         } else {
             if ($data) {
-                return redirect('admin/booking/create')->with('success', 'The booking has been added successfully!');
+                return redirect()->route('payment.admin_payment', ['booking_id' => $data->id, 'total_price' => $request->total_price]);
             } else {
                 return redirect('admin/booking/create')->with('fail', 'Something wrong occured! Try again.');
             }
@@ -208,6 +210,22 @@ class BookingController extends Controller
 
         return redirect('admin/booking')->with('success', 'The booking has been checked out successfully!');
     }
+
+    public function food($id)
+    {
+        $booking = Booking::find($id);
+        $foods = Food::all();
+        return view('booking.order', ['booking' => $booking, 'foods' => $foods]);
+    }
+
+    public function invoice($id)
+    {
+        $booking = Booking::find($id);
+        $payment = Payment::where('booking_id', $id)->first();
+        return view('booking.invoice', ['booking' => $booking, 'payment' => $payment]);
+    }
+    
+
     public function generateInvoice(Booking $booking)
     {
         $pdf = PDF::loadView('booking.invoice', ['booking' => $booking]);
