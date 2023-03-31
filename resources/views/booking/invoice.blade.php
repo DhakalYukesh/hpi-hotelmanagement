@@ -102,27 +102,106 @@
             border: 2px solid #1d79e2;
             padding: 5px;
             border-radius: 5px;
+
         }
 
-        .main .alert-success {
-            background-color: rgb(66, 110, 66);
-            color: #fff;
-            padding: 1rem;
+        /* Invoice Styles */
+        .invoice {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #e2e2e2;
+            font-family: Arial, sans-serif;
+            font-size: 14px;
+            color: #333;
         }
 
-        .main .alert-fail {
-            background-color: rgb(110, 66, 66);
+        .invoice-title {
+            font-size: 28px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #cb1919;
+            color: white;
+        }
+
+        .invoice-generate span {
+            display: block;
+            float: right;
+            background-color: #167deb;
             color: #fff;
-            padding: 1rem;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 14px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 8px;
+            margin-right: 30px;
+        }
+
+        .invoice-generate span:hover {
+            background-color: #0062cc;
+        }
+
+        #booking-info {
+            margin-top: 30px;
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        #booking-info td {
+            padding: 10px;
+            border: 1px solid #e2e2e2;
+            vertical-align: middle;
+        }
+
+        #booking-info td:first-child {
+            width: 180px;
+            font-weight: bold;
+        }
+
+        #booking-info .booking-id {
+            font-weight: bold;
+        }
+
+        #booking-info .services ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        #booking-info .food-order ul {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        #booking-info .total-amount {
+            font-weight: bold;
+        }
+
+        #booking-info .amount-left-to-pay {
+            font-weight: bold;
+            color: #ff0000;
+        }
+
+        #booking-info .invoice-button {
+            text-align: right;
+        }
+
+        @media print {
+            .invoice-generate {
+                display: none;
+            }
         }
     </style>
 
     <div class="main">
-        <h3>Booking Info
+        <h3>Booking Invoice
             <a href="{{ url('admin/booking') }}" class="view-rooms">View Bookings</a>
         </h3>
+        <a href="" class="invoice-generate"><span class="material-symbols-outlined">download</span> </a>
 
-        <h1>Booking Invoice</h1>
+        <div class="invoice">
+            <h1 class="invoice-title">Final Invoice</h1>
 
         <table>
             <tr>

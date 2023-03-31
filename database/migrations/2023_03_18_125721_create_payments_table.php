@@ -18,7 +18,7 @@ class CreatePaymentsTable extends Migration
             $table->string('payment_id');
             $table->string('amount', 10, 2);
             $table->string('currency');
-            $table->string('payment_status');
+            $table->string('payment_status')->default('unpaid');
             $table->timestamps();
         });
     }

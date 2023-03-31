@@ -83,6 +83,7 @@ Route::get('booking',[BookingController::class, 'booking']);
 
 // Payment gateaway
 Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/payment', [PaymentController::class, 'adminPayment'])->name('payment.admin_payment');
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');
 
