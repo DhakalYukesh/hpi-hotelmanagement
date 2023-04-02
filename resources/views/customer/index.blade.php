@@ -171,7 +171,7 @@
                         <td>
                             <a href="{{url('admin/customer/'.$dt->id)}}"><span class="material-symbols-outlined" id="view">visibility</span></a>
                             <a href="{{url('admin/customer/'.$dt->id).'/edit'}}"><span class="material-symbols-outlined" id="edit">edit</span></a>
-                            <a onclick="return confirm('(!) Are you sure you want to delete this room type?')" href="{{url('admin/roomtype/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
+                            <a onclick="return confirm('(!) Are you sure you want to delete this customer?')" href="{{url('admin/customer/'.$dt->id).'/delete'}}" class="delete"><span class="material-symbols-outlined"
                                     id="delete">delete</span></a>
                         </td>
                     </tr>

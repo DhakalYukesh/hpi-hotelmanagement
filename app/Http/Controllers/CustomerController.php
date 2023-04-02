@@ -136,7 +136,7 @@ class CustomerController extends Controller
     {
         Customer::where('id', $id)->delete();
 
-        return redirect('admin/customer')->with('success', 'The room type has been deleted successfully!');
+        return redirect('admin/customer')->with('success', 'The customer has been deleted successfully!');
     }
 
     //User login functionality

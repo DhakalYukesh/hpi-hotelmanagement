@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\PaymentSuccessful;
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use App\Models\Payment;
 use App\Models\Booking;
+use Illuminate\Support\Facades\DB;
 use Omnipay\Omnipay;
 
 class PaymentController extends Controller
@@ -47,6 +50,11 @@ class PaymentController extends Controller
 
         $bookingId = $request->input('booking_id');
         $booking = Booking::findOrFail($bookingId);
+        $customerEmail = DB::table('bookings')
+                    ->join('customers', 'bookings.customer_id', '=', 'customers.id')
+                    ->where('bookings.id', '=', $bookingId)
+                    ->select('customers.email')
+                    ->first()->email;
 
         $params = [
             'amount' => $request->get('total_price'),
@@ -60,6 +68,7 @@ class PaymentController extends Controller
 
         if ($response->isSuccessful()) {
             // Create payment record
+            // Save payment record
             $payment = new Payment();
             $payment->booking_id = $bookingId;
             $payment->amount = $request->get('total_price');
@@ -68,8 +77,13 @@ class PaymentController extends Controller
             $payment->payment_status = 'paid';
             $payment->save();
 
+            // Send email
+            \Mail::to($customerEmail)
+                ->send(new PaymentSuccessful($booking, $payment));
+
             // Show success message
-            return 'Payment successful!';
+            return redirect('booking')->with('success', 'The payment has been successfully processed!');
+
         } else {
             // Show error message
             return $response->getMessage();
