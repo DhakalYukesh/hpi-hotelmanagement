@@ -8,11 +8,20 @@
     <script src="https://kit.fontawesome.com/5daa8eb347.js" crossorigin="anonymous"></script>
     <link href="{{ asset('public/res/style.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/res/design.css') }}" rel="stylesheet" />
+    {{-- <link href="{{ asset('public/res/frontendBooking.css') }}" rel="stylesheet" /> --}}
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
 
 <body>
+    <style>
+        .content-table .service-option .check-label input{
+            background: #e9e9e9d3;
+            width: 10% !important;
+            padding: 20px;
+            font-size: 16px;
+        }
+    </style>
     <!-- Header section for the page. -->
     <header>
         <span class="material-symbols-outlined" id="menuBar">menu</span>
@@ -105,12 +114,13 @@
                             </span>
                             @foreach ($services as $service)
                                 <div class="service-option">
-                                    <input type="checkbox" class="service-checkbox" name="services[]"
-                                        value="{{ $service->id }}">
-                                    <label>{{ $service->title }} - ${{ $service->price }}</label>
+                                    <div class="check-label">
+                                        <input type="checkbox" class="service-checkbox" name="services[]"
+                                            value="{{ $service->id }}">
+                                        <label>{{ $service->title }} - ${{ $service->price }}</label>
+                                    </div>
                                 </div>
                             @endforeach
-
                         </td>
                     </tr>
                     <tr>

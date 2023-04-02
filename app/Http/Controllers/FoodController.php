@@ -156,9 +156,13 @@ class FoodController extends Controller
         ]);
 
         // Set payment_status to unpaid
-        $booking->payment->update(['payment_status' => 'unpaid']);
-
-        return redirect('admin/booking/' . $booking->id . '/food')->with('success', 'The food order has been added successfully!');
+        if ($booking->payment && $booking->payment->payment_status !== 'unpaid') {
+            $booking->payment->fill(['payment_status' => 'unpaid'])->save();
+            
+            return redirect('admin/booking/' . $booking->id . '/food')->with('success', 'The food order has been added successfully!');
+        }else{
+            return redirect('admin/booking/' . $booking->id . '/food')->with('success', '(!) The food order has been added successfully!');
+        }
     }
 
 }

@@ -13,4 +13,9 @@ class Food extends Model
     {
         return $this->belongsToMany(Booking::class)->withPivot('quantity');
     }
+
+    public function bookingFood()
+    {
+        return $this->belongsToMany(BookingFood::class);
+    }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\BookingFood;
 use App\Models\Food;
 use App\Models\Room;
 use Dompdf\Options;
@@ -224,9 +225,19 @@ class BookingController extends Controller
     {
         $booking = Booking::find($id);
         $payment = Payment::where('booking_id', $id)->first();
-        return view('booking.invoice', ['booking' => $booking, 'payment' => $payment]);
+        $food = Food::all();
+
+        // Fetch all BookingFood records for the given booking ID
+        $booking_food = BookingFood::where('booking_id', $id)->get();
+
+        return view('booking.invoice', [
+            'booking' => $booking,
+            'payment' => $payment,
+            'food' => $food,
+            'booking_food' => $booking_food, // Pass the $booking_food array to the view
+        ]);
     }
-    
+
 
     public function generateInvoice(Booking $booking)
     {

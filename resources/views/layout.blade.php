@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta charset="utf-8">
     <title>Admin Dashboard</title>
 
     @if (!Session::has('admin_data'))
@@ -11,6 +12,7 @@
     @endif
 
     <link href="{{ asset('public/res/adminStyle.css') }}" rel="stylesheet" />
+    <link href="{{ asset('public/res/navigationStyle.css') }}" rel="stylesheet" />
     <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -36,22 +38,19 @@
                     </div>
                 </a>
 
-                <div>
-                    <a href="{{ url('admin/room') }}">
-                        <div class="nav-option option1">
-                            <span class="material-symbols-outlined">bed</span>
-                            <h3>Rooms</h3>
-                        </div>
-                    </a>
-                    <div>
-                        <a href="{{ url('admin/room') }}">
-                            <div class="room-options">Rooms</div>
-                        </a>
-                        <a href="{{ url('admin/roomtype') }}">
-                            <div class="room-options">Room Types</div>
-                        </a>
-                    </div>
+                <div class="nav-option option1 room" id="rooms-button">
+                    <span class="material-symbols-outlined">bed</span>
+                    <h3>Rooms</h3>
                 </div>
+                <div class="child-options" id="rooms-child-options">
+                    <a href="{{ url('admin/room') }}">
+                        <div class="room-options">Rooms</div>
+                    </a>
+                    <a href="{{ url('admin/roomtype') }}">
+                        <div class="room-options">Room Types</div>
+                    </a>
+                </div>
+
 
                 <a href="{{ url('admin/customer') }}">
                     <div class="nav-option option1">
@@ -95,8 +94,15 @@
                     </div>
                 </a>
 
-                <a href="{{ url('admin/logout') }}">
+                <a href="{{ url('admin/finance') }}">
                     <div class="nav-option option1">
+                        <span class="material-symbols-outlined">account_balance</span>
+                        <h3>Finance</h3>
+                    </div>
+                </a>
+
+                <a href="{{ url('admin/logout') }}">
+                    <div class="nav-option logout">
                         <span class="material-symbols-outlined">logout</span>
                         <h3>Log out</h3>
                     </div>
@@ -117,6 +123,22 @@
     <script>
         $(document).ready(function() {
             $('#Table_ID').DataTable();
+        });
+
+        // Get all the nav-options
+        const navOptions = document.querySelectorAll('.nav-option');
+
+        // Loop through each nav-option
+        navOptions.forEach(function(navOption) {
+            // Add a click event listener to the nav-option
+            navOption.addEventListener('click', function() {
+                // Toggle the show class on the child options div
+                const childOptions = navOption.nextElementSibling;
+                childOptions.classList.toggle('show');
+
+                // Toggle the active class on the nav-option
+                navOption.classList.toggle('active');
+            });
         });
     </script>
 </body>

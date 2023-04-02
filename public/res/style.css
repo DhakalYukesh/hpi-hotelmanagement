@@ -50,7 +50,7 @@ section {
 
 .heading span {
     background: var(--red);
-    color: #36d71e;
+    color: white;
     display: inline-block;
     padding: 0.5rem 3rem;
     clip-path: polygon(100% 0, 93% 50%, 100% 99%, 0% 100%, 7% 50%, 0% 0);
@@ -89,7 +89,7 @@ header {
 header .logo {
     font-size: 2.5rem;
     font-weight: bolder;
-    color: #4a1212;
+    color: white;
     text-transform: uppercase;
 }
 
@@ -110,7 +110,7 @@ header .navbar a:hover {
     color: var(--red);
 }
 
-header .signIn #login-btn{
+header .signIn #login-btn {
     display: inline-block;
     padding: 10px 20px;
     font-size: 1.8rem;
@@ -124,7 +124,7 @@ header .signIn #login-btn{
     text-transform: capitalize;
 }
 
-header .logout #logout-btn{
+header .logout #logout-btn {
     display: inline-block;
     padding: 10px 20px;
     font-size: 1.8rem;
@@ -138,11 +138,11 @@ header .logout #logout-btn{
     text-transform: capitalize;
 }
 
-header .signIn #login-btn:hover{
+header .signIn #login-btn:hover {
     background-color: var(--red);
 }
 
-header .logout #logout-btn:hover{
+header .logout #logout-btn:hover {
     background-color: var(--red);
 }
 
@@ -602,14 +602,16 @@ header .logout #logout-btn:hover{
     visibility: visible !important;
 }
 
-.responsiveNav a{
+.responsiveNav a {
     display: block;
     padding: 1rem;
 }
 
-.responsiveNav a:hover{
-    background-color:rgb(66, 110, 66);
+.responsiveNav a:hover {
+    background-color: rgb(66, 110, 66);
 }
+
+
 
 /* media queries */
 
@@ -647,33 +649,33 @@ header .logout #logout-btn:hover{
         padding: 2rem;
     }
     section {
-        padding: 2rem;
+        padding: 0rem;
     }
 }
 
 @media (max-width: 768px) {
-    #menuBar{
+    #menuBar {
         display: initial;
     }
 
-    header .navbar{
+    header .navbar {
         position: absolute;
         top: 100%;
         right: 0;
         left: 0;
         background: #2d0c0c;
-        border-top: .1rem solid #5a2d2d;
+        border-top: 0.1rem solid #5a2d2d;
         padding: 1rem 2rem;
-        clip-path:polygon(0 0, 100% 0, 100% 0, 0 0);
+        clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
     }
 
-    header .navbar.active{
+    header .navbar.active {
         clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
     }
 
-    header .navbar a{
+    header .navbar a {
         display: block;
-        border-radius: .5rem;
+        border-radius: 0.5rem;
         padding: 1.5rem;
         margin: 1.5rem 0;
         background: #551313;

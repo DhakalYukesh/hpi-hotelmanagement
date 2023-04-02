@@ -91,7 +91,7 @@ class RoomController extends Controller
         $data->save();
 
         if($data){
-            return redirect('admin/room/'.$id.'/edit')->with('success', 'The room type has been updated successfully!');
+            return redirect('admin/room/'.$id.'/edit')->with('success', 'The room has been updated successfully!');
         } else {
             return redirect('admin/room/'.$id.'/edit')->with('fail', 'Something went wrong! Try again.');
         }
@@ -107,6 +107,6 @@ class RoomController extends Controller
     {
         Room::where('id',$id)->delete();
 
-        return redirect('admin/room')->with('success', 'The room type has been deleted successfully!');
+        return redirect('admin/room')->with('success', 'The room has been deleted successfully!');
     }
 }

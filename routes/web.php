@@ -33,11 +33,7 @@ Route::get('/', function () {
 Route::get('admin', [AdminAuthController::class,'login']);
 Route::post('admin', [AdminAuthController::class,'loginCheck']);
 Route::get('admin/logout', [AdminAuthController::class,'logout']);
-
-
-Route::get('admin/dashboard', function () {
-    return view('dashboard');
-});
+Route::get('admin/dashboard', [AdminAuthController::class,'dashboard']);
 
 // Roomtype Route
 Route::resource('admin/roomtype',RoomtypeController::class);
@@ -69,6 +65,7 @@ Route::get('admin/service/{id}/delete',[ServiceController::class,'destroy']);
 Route::resource('admin/food',FoodController::class);
 Route::post('admin/booking/{id}/food', [FoodController::class, 'handleOrder']);
 Route::get('admin/food/{id}/delete',[FoodController::class,'destroy']);
+Route::get('admin/booking/{id}/invoice',[BookingController::class, 'invoice']);
 
 // Staff Route
 Route::resource('admin/staff',StaffController::class);
@@ -82,7 +79,7 @@ Route::get('admin/department/{id}/delete',[StaffDepartController::class,'destroy
 Route::get('booking',[BookingController::class, 'booking']);
 
 // Payment gateaway
-Route::get('/payment', [PaymentController::class, 'index'])->name('payment.index');
+Route::get('/booking/payment', [PaymentController::class, 'index'])->name('payment.index');
 Route::get('/payment', [PaymentController::class, 'adminPayment'])->name('payment.admin_payment');
 Route::get('/payment/success', [PaymentController::class, 'success'])->name('payment.success');
 Route::get('/payment/cancel', [PaymentController::class, 'cancel'])->name('payment.cancel');

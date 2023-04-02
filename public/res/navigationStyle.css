@@ -1,0 +1,58 @@
+/* Style for room-options */
+.child-options {
+    display: none;
+}
+.main-container .nav-container .nav .room-options{
+    display: flex;
+    align-items: center;
+    width: 240px;
+    height: 58px;
+    padding: 0 20px 0 22px;
+    cursor: pointer;
+}
+
+.main-container .nav-container .nav .room-options:hover{
+    background-color: rgb(224, 223, 223);
+}
+
+/* Style for room-options when it's shown */
+.child-options.show {
+    display: flex;
+    align-items: center;
+    /* width: 250px;
+    height: 60px ; */
+    /* padding: 0 30px 0 20px; */
+    flex-direction: column;
+    cursor: pointer;
+    background-color: #f1f1f1;
+    color: black;
+}
+
+/* Style for the div that contains the child buttons */
+.nav-option.room {
+    position: relative;
+    align-items: center;
+    width: 250px;
+    height: 60px;
+    padding: 0 30px 0 20px;
+    gap: 20px;
+    cursor: pointer;
+}
+
+
+/* Style for the arrow icon */
+.nav-option.room::after {
+    content: "\25BE";
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+}
+
+
+/* Style for the arrow icon when the child options are shown */
+.nav-option.room.show::after {
+    content: "\25B4";
+    transform: translateY(-50%) rotate(180deg);
+}
