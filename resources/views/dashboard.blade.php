@@ -243,15 +243,15 @@
             </div>
             <div class="dash-booking">
                 <h3 class="material-symbols-outlined">book <span>Total Bookings:</span></h3>
-                <a></a>
+                <a id="dash-numbers"></a>
             </div>
             <div class="dash-rooms">
                 <h3 class="material-symbols-outlined">bed <span>Total Rooms:</span></h3>
-                <a></a>
+                <a id="dash-numbers"></a>
             </div>
             <div class="dash-services">
                 <h3 class="material-symbols-outlined">wb_iridescent <span>Total Services:</span></h3>
-                <a></a>
+                <a id="dash-numbers"></a>
             </div>
         </div>
 

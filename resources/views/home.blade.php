@@ -12,6 +12,49 @@
 </head>
 
 <body>
+    <style>
+        .profile {
+            color: white;
+            font-size: 1.8rem;
+            display: flex;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .profile-circle {
+            color: white;
+            font-size: 29px;
+            cursor: pointer;
+        }
+
+        .logout .profile:hover .options {
+            display: block;
+        }
+
+        .logout .profile .options {
+            display: none;
+            position: absolute;
+            top: 56px;
+            right: 6;
+            z-index: -1;
+            font-size: 16px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 10px;
+            width: 140px;
+        }
+
+        .logout .profile .options a {
+            display: block;
+            color: #333;
+            text-decoration: none;
+            padding: 5px;
+        }
+
+        .logout .profile .options a:hover {
+            background-color: #e1e0e0;
+        }
+    </style>
     <!-- Header section for the page. -->
     <header>
         <div class="ham">
@@ -30,7 +73,13 @@
 
         @if (Session::has('loginId'))
             <div class="logout">
-                <a id="logout-btn" href="{{ url('logout') }}">Logout</a>
+                <div class="profile">
+                    <span class="material-symbols-outlined profile-circle">account_circle</span>Profile
+                    <div class="options">
+                        <a href="#">Profile</a>
+                        <a href="{{ url('logout') }}">Logout</a>
+                    </div>
+                </div>
             </div>
         @else
             <div class="signIn">
@@ -270,7 +319,6 @@
     notbook.addEventListener('click', () => {
         formBtn.click()
     })
-    
 </script>
 
 <script src="{{ asset('public/js/main.js') }}"></script>

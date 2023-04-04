@@ -94,7 +94,7 @@ class PaymentController extends Controller
     public function cancel()
     {
         // Show cancel message
-        return 'Payment cancelled!';
+        return redirect('booking')->with('fail', 'The payment has been cancelled!');
     }
 
 

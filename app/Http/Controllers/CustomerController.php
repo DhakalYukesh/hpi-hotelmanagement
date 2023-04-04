@@ -176,4 +176,9 @@ class CustomerController extends Controller
         session()->forget(['loginId', 'data']);
         return redirect('home');
     }
+
+    public function customerHome(){
+        $customers = Customer::all();
+        return view('home', ['customer' => $customers]);
+    }
 }
