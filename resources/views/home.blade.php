@@ -120,6 +120,7 @@
             <button type="submit" value="" class="log-btn">Sign In</button>
             <input type="checkbox" id="remember">
             <label for="remember">Remember me</label>
+            <p>staff member? <a href="admin">Login Here</a></p>
             <p>Don't have an account? <a href="registration">Register now!</a></p>
         </form>
     </div>
@@ -248,7 +249,7 @@
             <div class="img">
                 <img src="{{ asset('public/images/contact.png') }}" alt="">
             </div>
-            <form action="">
+            <form action="{{ url('customer/contact_us') }}">
                 <div class="inputBox">
                     <input type="text" placeholder="Full Name">
                     <input type="email" placeholder="Email">

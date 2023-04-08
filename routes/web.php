@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ArchivedController;
 use App\Http\Controllers\FoodController;
 use App\Http\Controllers\PaymentController;
 use App\Http\Controllers\ServiceController;
@@ -30,6 +31,8 @@ Route::get('/', function () {
     return view('home');
 });
 
+Route::post('contact_us', [CustomAuthController::class, 'contact_us']);
+
 /* ------------- Admin Routing ------------ */
 // Routing for admin login
 Route::get('admin', [AdminAuthController::class, 'login']);
@@ -49,6 +52,10 @@ Route::get('admin/room/{id}/delete', [RoomController::class, 'destroy']);
 Route::resource('admin/customer', CustomerController::class);
 Route::get('admin/customer/{id}/delete', [CustomerController::class, 'destroy']);
 
+/* ------------- Archived Booking Routing ------------ */
+Route::get('admin/booking/archive', [ArchivedController::class, 'archiveIndex'])->name('booking.archiveindex');
+Route::get('admin/booking/archive/{id}/delete', [ArchivedController::class, 'destroy']);
+
 /* ------------- Booking Routing ------------ */
 Route::resource('admin/booking', BookingController::class);
 Route::get('admin/booking/{id}/delete', [BookingController::class, 'destroy']);
@@ -56,6 +63,7 @@ Route::get('admin/booking/{id}/checkedIn', [BookingController::class, 'checkedin
 Route::get('admin/booking/{id}/checkedOut', [BookingController::class, 'checkedout']);
 Route::get('admin/booking/{id}/invoice', [BookingController::class, 'invoice']);
 Route::get('admin/booking/{id}/gen_invoice', [BookingController::class, 'generateInvoice']);
+Route::get('admin/booking/{id}/arc_booking', [BookingController::class, 'archive']);
 Route::get('admin/booking/{id}/food', [BookingController::class, 'food']);
 Route::get('booking/availableRooms/{check_in}/{num_days}', [BookingController::class, 'available_Rooms'])->name('booking.availableRooms');
 
@@ -76,6 +84,9 @@ Route::get('admin/staff/{id}/delete', [StaffController::class, 'destroy']);
 /* ------------- Department Routing ------------ */
 Route::resource('admin/department', StaffDepartController::class);
 Route::get('admin/department/{id}/delete', [StaffDepartController::class, 'destroy']);
+
+/* ------------- Finance Routing ------------ */
+Route::get('admin/finance', [BookingController::class, 'finance']);
 
 /* ------------- User Booking Routing - Frontend ------------ */
 Route::get('booking', [BookingController::class, 'booking']);

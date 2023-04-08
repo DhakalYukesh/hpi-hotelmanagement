@@ -12,4 +12,7 @@ class Customer extends Model
     function bookings(){
         return $this->hasMany(Booking::class);
     }
+    function archived_bookings(){
+        return $this->hasMany(ArchivedBooking::class);
+    }
 }

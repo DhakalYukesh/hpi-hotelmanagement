@@ -217,7 +217,7 @@
         <h3>Booking Invoice
             <a href="{{ url('admin/booking') }}" class="view-rooms">View Bookings</a>
         </h3>
-        <a href="" class="invoice-generate"><span class="material-symbols-outlined">download</span> </a>
+        <a href="{{ url('admin/booking/' . $booking->id) . '/gen_invoice' }}" class="invoice-generate"><span class="material-symbols-outlined">download</span> </a>
 
         <div class="invoice">
             <h1 class="invoice-title">Final Invoice</h1>
@@ -271,7 +271,7 @@
                 </tr>
                 <tr>
                     @if ($payment->payment_status == 'paid')
-                        <td>Total Amount:</td>
+                        <td>Total Amount Left:</td>
                         <td class="amount-left-to-pay">$0</td>
                     @else
                         <td>Food Order:</td>
@@ -307,5 +307,5 @@
 
             </table>
         </div>
-        <a href="" class="invoice_complete">Archive Booking</a>
+        <a href="{{ url('admin/booking/' . $booking->id) . '/arc_booking' }}" class="invoice_complete">Archive Booking</a>
     @endsection

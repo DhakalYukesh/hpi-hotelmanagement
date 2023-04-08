@@ -74,4 +74,8 @@ class CustomAuthController extends Controller{
             return redirect('/');
         }
     }
+
+    public function contact_us(){
+        return redirect('home');
+    }
 }

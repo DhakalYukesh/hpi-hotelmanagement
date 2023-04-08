@@ -58,8 +58,8 @@
         }
 
         /* .content-table tbody:last-of-type tr {
-                                      border-bottom: 2px solid #ee1d1d;
-                                     } */
+                                              border-bottom: 2px solid #ee1d1d;
+                                             } */
 
         .content-table tbody tr td a #view {
             background: #e08422;
@@ -154,10 +154,10 @@
             background-color: white;
         }
 
-        .content-table .dash-customer {
+        .content-table .dash-revenue {
             width: 100%;
-            border-left: 5px solid #0098ba;
-            background: #0098ba1c;
+            border-left: 5px solid #ba9e00;
+            background: #ba9e001b;
         }
 
         .content-table .dash-booking {
@@ -166,7 +166,7 @@
             background: #ba000023;
         }
 
-        .content-table .dash-rooms {
+        .content-table .dash-salary {
             width: 100%;
             border-left: 5px solid #00ba06;
             background: #00ba061e;
@@ -188,83 +188,132 @@
 
         .dash-chart {
             /* width: 100%; */
-			width: 100%;
+            width: 100%;
             height: 100%;
             display: flex;
             flex-direction: row;
             gap: 2%;
             background: rgb(255, 255, 255);
-			padding: 2%;
-			padding-top: 0%;
+            padding: 2%;
+            padding-top: 0%;
         }
 
-        .dash-chart #booking-chart {
-            border-left: 5px solid #ee184a;
-            background: #ee184a12;
-            width: 80%;
+        .dash-chart #revenue-expense-chart {
+            border-left: 5px solid #184aee;
+            background: #184aee0e;
+            width: 75%;
             height: 480px;
         }
 
-		.dash-chart .dash-pie{
-			background: rgba(23, 186, 178, 0.097);
-			color: black;
-			
-		}
+        .dash-chart .dash-pie {
+            background: #7819d01d;
+            color: black;
+            width: 25%;
 
-		.dash-chart .dash-pie #booking-pie{
-			padding-left: 0;
-			margin-top: 50px;
-		}
+        }
 
-		.dash-chart .dash-pie h3{
-			font-weight: bold;
-			font-size: 20px;
-			border-top: 5px solid #19b5d0;
-		}
+        .dash-chart .dash-pie #booking-pie {
+            padding-left: 0;
+            margin-top: 50px;
+        }
+
+        .dash-chart .dash-pie h3 {
+            font-weight: bold;
+            font-size: 20px;
+            border-top: 5px solid #7819d0;
+        }
+
+        #recent-table {
+            padding: 5px;
+            width: 100%;
+            height: 85%;
+        }
+
+        td {
+            text-align: center;
+        }
     </style>
 
     <div class="main">
-        <h3>Dashboard
-            <a href="{{ url('admin/booking/create') }}" class="add-rooms">Add Booking</a>
-        </h3>
+        <h3>Finance Dashboard</h3>
 
         <div class="content-table">
-            <div class="dash-customer">
-                <h3 class="material-symbols-outlined">group <span>Total Customers:</span></h3>
-                <a id="dash-numbers">{{App\Models\Customer::count()}}</a>
+            <div class="dash-revenue">
+                <h3 class="material-symbols-outlined">monetization_on <span>Total Revenue:</span></h3>
+                <a id="dash-numbers">${{ $totalAmount }}</a>
+            </div>
+            <div class="dash-salary">
+                <h3 class="material-symbols-outlined">payments <span>Total Staff Salary:</span></h3>
+                <a id="dash-numbers">${{ $totalSalary }}</a>
             </div>
             <div class="dash-booking">
-                <h3 class="material-symbols-outlined">book <span>Total Bookings:</span></h3>
-                <a id="dash-numbers">{{App\Models\Booking::count()}}</a>
-            </div>
-            <div class="dash-rooms">
-                <h3 class="material-symbols-outlined">bed <span>Total Rooms:</span></h3>
-                <a id="dash-numbers">{{App\Models\Room::count()}}</a>
-            </div>
-            <div class="dash-services">
-                <h3 class="material-symbols-outlined">wb_iridescent <span>Total Services:</span></h3>
-                <a id="dash-numbers">{{App\Models\Service::count()}}</a>
+                <h3 class="material-symbols-outlined">badge <span>Total Staffs:</span></h3>
+                <a id="dash-numbers">{{ App\Models\Staff::count() }}</a>
             </div>
         </div>
 
         <div class="dash-chart">
-            <canvas id="booking-chart"></canvas>
+            <canvas id="revenue-expense-chart"></canvas>
 
             <div class="dash-pie">
-                <h3>RoomType Overview</h3>
-                <canvas id="booking-pie"></canvas>
+                <h3 class="material-symbols-outlined">credit_score <span>Recent Payments</span></h3>
+                <table id="recent-table">
+                    <thead>
+                        <tr>
+                            <th>Booking ID</th>
+                            <th>Customer</th>
+                            <th>Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($recentPayment as $payment)
+                            <tr>
+                                <td>{{ $payment->booking_id }}</td>
+                                <td>{{ $payment->booking->customer->fname }}</td>
+                                <td>{{ $payment->amount }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-	<script>
-		var _lables = {!! json_encode($labels) !!}
-        var _data = {!! json_encode($data) !!}
-
-		var _plabels = {!! json_encode($plabels) !!}
-        var _pdata = {!! json_encode($pdata) !!}
-	</script>
-    <script src="{{ asset('public/js/dashChart.js') }}"></script>
-    <script src="{{ asset('public/js/dashPie.js') }}"></script>
+    <script>
+        var ctx = document.getElementById('revenue-expense-chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: {!! json_encode($revenueData->pluck('currency')) !!},
+                datasets: [{
+                        label: 'Revenue',
+                        data: {!! json_encode($revenueData->pluck('total')) !!},
+                        backgroundColor: 'green'
+                    },
+                    {
+                        label: 'Expense',
+                        data: {!! json_encode(
+                            $expenseData->pluck('total')->map(function ($total) {
+                                return -$total;
+                            }),
+                        ) !!},
+                        backgroundColor: 'red'
+                    }
+                ]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true,
+                            callback: function(value, index, values) {
+                                return '$' + value;
+                            }
+                        }
+                    }]
+                }
+            }
+        });
+    </script>
 @endsection

@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\ArchivedBooking;
 use App\Models\BookingFood;
 use App\Models\Food;
 use App\Models\Room;
+use App\Models\Staff;
 use Dompdf\Options;
 use PDF;
 use Carbon\Carbon;
@@ -32,6 +34,12 @@ class BookingController extends Controller
     {
         $booking = Booking::all();
         return view('booking.index', ['data' => $booking]);
+    }
+
+    public function archiveIndex()
+    {
+        $booking = ArchivedBooking::all();
+        return view('booking.archiveindex', ['data' => $booking]);
     }
 
     /**
@@ -239,27 +247,36 @@ class BookingController extends Controller
     }
 
 
-    public function generateInvoice(Booking $booking)
+    public function generateInvoice($id)
     {
+        $booking = Booking::find($id);
+        $payment = Payment::where('booking_id', $id)->first();
+        $food = Food::all();
+        $booking_food = BookingFood::where('booking_id', $id)->get();
+
         $options = [
             'fontDir' => storage_path('fonts/'),
             'fontCache' => storage_path('fonts/'),
             'defaultFont' => 'poppins',
         ];
 
-        $pdf = PDF::setOptions($options)->loadView('booking.generateinvoice', compact('booking'));
-        return $pdf->stream('booking_invoice.pdf');
+        $pdf = PDF::setOptions($options)->loadView('booking.generateinvoice', [
+            'booking' => $booking,
+            'payment' => $payment,
+            'food' => $food,
+            'booking_food' => $booking_food,
+        ]);
+
+        return $pdf->download('BookingInvoice.pdf');
     }
 
     public function available_Rooms(Request $request, $check_in, $check_out)
     {
-
         $query = "SELECT * FROM rooms WHERE id NOT IN (
             SELECT room_id FROM bookings WHERE ('$check_in' >= check_in AND '$check_in' < check_out) OR ('$check_out' > check_in AND '$check_out' <= check_out) OR (check_in >= '$check_in' AND check_in < '$check_out') OR (check_out > '$check_in' AND check_out <= '$check_out'));
           ";
 
         $availableRooms = DB::select($query);
-
         $data = [];
         foreach ($availableRooms as $room) {
             $roomType = RoomType::find($room->room_type_id);
@@ -268,12 +285,45 @@ class BookingController extends Controller
         return response()->json(['data' => $data]);
     }
 
-
     public function frontendBook()
     {
         if (session())
             return view('frontendBooking');
     }
 
+    public function archive($id)
+    {
+        $booking = Booking::findOrFail($id);
+
+        // Save booking data to archived_bookings table
+        $archivedBooking = new ArchivedBooking;
+        $archivedBooking->customer_id = $booking->customer_id;
+        $archivedBooking->room_id = $booking->room_id;
+        $archivedBooking->check_in = $booking->check_in;
+        $archivedBooking->check_out = $booking->check_out;
+        $archivedBooking->cus_adult = $booking->cus_adult;
+        $archivedBooking->cus_children = $booking->cus_children;
+        $archivedBooking->num_days = $booking->num_days;
+        $archivedBooking->status = 'archived';
+        $archivedBooking->save();
+
+        // Delete booking from bookings table
+        $booking->delete();
+
+        return redirect('admin/booking')->with('success', 'The booking has been archived successfully!');
+    }
+
+    public function finance(){
+        $recentPayment = Payment::where('created_at', '>=', now()->subDays(7))->take(10)->get();
+        $totalAmount = Payment::sum('amount');
+        $totalSalary = Staff::sum('salary_amount');
+
+        //Defining variable for chart
+        $revenueData = Payment::select('currency', DB::raw('SUM(amount) as total'))->groupBy('currency')->get();
+        $expenseData = Staff::select('department_id', DB::raw('SUM(salary_amount) as total'))->groupBy('department_id')->get();
+
+
+        return view('finance', ['totalAmount' => $totalAmount, 'recentPayment' => $recentPayment, 'totalSalary' => $totalSalary, 'revenueData' => $revenueData, 'expenseData' => $expenseData]);
+    }    
 
 }

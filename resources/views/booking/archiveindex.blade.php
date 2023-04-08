@@ -200,10 +200,9 @@
     </style>
 
     <div class="main">
-        <h3>Available Bookings
-            <a href="{{ url('admin/booking/create') }}" class="add-rooms">Add Booking</a>
+        <h3>Archived Bookings
+            <a href="{{ url('admin/booking') }}" class="add-rooms">View Bookings</a>
         </h3>
-        <a href="{{ route('booking.archiveindex') }}" class="archive">Archived Bookings</a>
         
         @if (Session::has('success'))
         <div class="alert-success" id="alert-success">{{ Session::get('success') }}</div>
@@ -221,7 +220,6 @@
                     <th>Room Number</th>
                     <th>CheckIn Date</th>
                     <th>CheckOut Date</th>
-                    <th>Booked By</th>
                     <th>Status</th>
                     <th>Action</th>
                 </tr>
@@ -235,7 +233,6 @@
                             <td>{{ $book->room->title }}</td>
                             <td>{{ $book->check_in }}</td>
                             <td>{{ $book->check_out }}</td>
-                            <td>{{ $book->book_ref }}</td>
                             <td
                                 @if ($book->status == 'booked') style="background: #41b82925; border-bottom: 4px solid #2ec018;"
                             @elseif($book->status == 'checked in')
@@ -245,33 +242,9 @@
                                 {{ $book->status }}</td>
 
                             <td>
-                                @if ($book->status == 'booked')
-                                    <a onclick="return confirm('(!) Are you sure you want to check in this booking?')"
-                                        href="{{ url('admin/booking/' . $book->id) . '/checkedIn' }}" class="checkedin">
-                                        <span class="material-symbols-outlined" id="checkedin">select_check_box</span>
-                                    </a>
-                                @elseif($book->status == 'checked in')
-                                    <a onclick="return confirm('(!) Are you sure you want to check out this booking?')"
-                                        href="{{ url('admin/booking/' . $book->id) . '/checkedOut' }}" class="checkedout">
-                                        <span class="material-symbols-outlined" id="checkedout">logout</span>
-                                    </a>
-                                @else
-                                    <a href="{{ url('admin/booking/' . $book->id) . '/invoice' }}" class="invoice">
-                                        <span class="material-symbols-outlined" id="invoice">file_open</span>
-                                    </a>
-                                @endif
-
-                                <a href="{{ url('admin/booking/' . $book->id) }}"><span class="material-symbols-outlined"
-                                        id="view">visibility</span></a>
-                                <a href="{{ url('admin/booking/' . $book->id) . '/edit' }}"><span
-                                        class="material-symbols-outlined" id="edit">edit</span></a>
                                 <a onclick="return confirm('(!) Are you sure you want to delete this booking?')"
-                                    href="{{ url('admin/booking/' . $book->id) . '/delete' }}" class="delete"><span
+                                    href="{{ url('admin/booking/archive/' . $book->id) . '/delete' }}" class="delete"><span
                                         class="material-symbols-outlined" id="delete">delete</span></a>
-                                @if ($book->status == 'checked in')
-                                    <a href="{{ url('admin/booking/' . $book->id) . '/food' }}"><span
-                                            class="material-symbols-outlined" id="food">restaurant</span></a>
-                                @endif
                             </td>
                         </tr>
                     @endforeach
