@@ -17,7 +17,7 @@
             
             <form action="{{url('admin')}}" method="post">
                 @csrf
-                <h3>Admin Sign-In</h3>
+                <h3>Management Sign-In</h3>
                 @if(Session::has('success'))
                 <div class="alert-success" id="alert-success">{{Session::get('success')}}</div>
                 @endif

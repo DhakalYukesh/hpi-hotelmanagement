@@ -191,6 +191,28 @@
                     </td>
                 </tr>
                 <tr>
+                    <th>Password</th>
+                    <td>
+                        <span class="danger">
+                            @error('password')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="password" class="room-form" name="password" >
+                    </td>
+                </tr>
+                <tr>
+                    <th>Staff Type</th>
+                    <td>
+                        <span class="danger">
+                            @error('type')
+                                {{ $message }}
+                            @enderror
+                        </span>
+                        <input type="text" class="room-form" name="type" value="{{ old('type') }}" placeholder="Eg: Staff or Admin">
+                    </td>
+                </tr>
+                <tr>
                     <th>Salary Type</th>
                     <td>
                         <span class="danger">

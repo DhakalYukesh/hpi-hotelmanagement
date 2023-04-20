@@ -59,15 +59,6 @@
             font-size: 16px;
         }
 
-        .content-table textarea {
-            background: #e9e9e9d3;
-            width: 100%;
-            padding-top: 20px;
-            height: 110px;
-            text-align: center;
-            font-size: 16px;
-        }
-
         .content-table button {
             background: #ee1d1d;
             color: #fffffff5;
@@ -115,7 +106,7 @@
             padding: 1rem;
         }
 
-        .danger{
+        .danger {
             color: #ee1d1d;
             font-size: 14px;
         }
@@ -134,9 +125,9 @@
     </style>
 
     <div class="main">
-        <form method="post" action="{{ url('admin/room/'.$data->id) }}">
-            <h3>Edit Room
-                <a href="{{ url('admin/room/') }}" class="view-rooms">View Rooms</a>
+        <form method="post" action="{{ url('admin/staff') }}">
+            <h3>Add Staff Account
+                <a href="{{ url('admin/staff/') }}" class="view-rooms">View Staffs</a>
             </h3>
             @if (Session::has('success'))
                 <div class="alert-success" id="alert-success">{{ Session::get('success') }}</div>
@@ -147,40 +138,54 @@
             @endif
 
             @csrf
-            @method('put')
             <table class="content-table">
                 <tr>
-                    <th>Room Types</th>
+                    <th>Staff Username</th>
                     <td>
                         <span class="danger">
-                            @error('title')
+                            @error('fname')
                                 {{ $message }}
                             @enderror
                         </span>
-                        <select class="select-form" name="room_type_id" value="{{$data->title}}">
-                            <option value="0">Select the room type</option>
-                            @foreach ($roomtype as $roomt)
-                                <option  @if($data->room_type_id==$roomt->id) selected @endif value="{{$roomt->id}}">
-                                    {{ $roomt->title }}
+                        <select class="select-form" name="staff_id" value="{{ old('staff_id') }}">
+                            <option value="0">Select the staff</option>
+                            @foreach ($staff as $st)
+                                <option value="{{ $st->id }}">
+                                    {{ $st->fname }}
                                 </option>
                             @endforeach
+                        </select>
                         </select>
                     </td>
                 </tr>
                 <tr>
-                    <th>Title</th>
+                    <th>Email</th>
+                    <td>
+                        <span class="danger">@error('email') {{$message}} @enderror</span>
+                        <input type="email" class="room-form" name="email" value="{{old('email')}}">
+                    </td>
+                </tr>
+                <tr>
+                    <th>Password</th>
+                    <td>
+                        <span class="danger">@error('password') {{$message}} @enderror</span>
+                        <textarea type="password" class="room-form" name="password" value=""></textarea>
+                    </td>
+                </tr>
+                <tr>
+                    <th>Staff Type</th>
                     <td>
                         <span class="danger">
-                            @error('title')
+                            @error('fname')
                                 {{ $message }}
                             @enderror
                         </span>
-                        <input type="text" class="room-form" name="title" value="{{$data->title}}">
+                        <input type="text" class="room-form" name="fname" value="{{ old('fname') }}" placeholder="Eg: Staff or Admin">
                     </td>
                 </tr>
                 <tr>
                     <td colspan="2">
-                        <button type="submit" class="btn">Update Room</button>
+                        <button type="submit" class="btn">Add Staff Account</button>
                     </td>
                 </tr>
             </table>

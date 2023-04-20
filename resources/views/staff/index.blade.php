@@ -133,6 +133,23 @@
             padding: 1rem;
         }
 
+        .add-account{
+            padding-left: 10px;
+            display: flex;
+            font-size: 1rem;
+            color: black;
+            border: 2px solid rgba(27, 27, 27, 0.677);
+            padding: 5px;
+            border-radius: 5px;
+            margin-left: 10px;
+            height: 35px;
+        }
+
+        .add-account:hover{
+            background: #225be0;
+            color: white;
+            border: 2px solid #225be0;
+        }
     </style>
 
     <div class="main">

@@ -20,7 +20,7 @@
         <!-- Registration section for the page. -->
         <section class="register" id="register">
             <div class="register-form-container">
-                <form action="{{url('admin/customer')}}" method="post">
+                <form action="{{url('registration/verify')}}" method="post">
                     <h3>Register In</h3>
                     @if(Session::has('success'))
                     <div class="alert-success" id="alert-success">{{Session::get('success')}}</div>

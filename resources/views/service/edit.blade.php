@@ -179,7 +179,7 @@
                                 {{ $message }}
                             @enderror
                         </span>
-                        <textarea type="text" class="room-form" name="detail" value="{{ $data->detail }}"></textarea>
+                        <input type="text" class="room-form" name="detail" value="{{ $data->detail }}">
                     </td>
                 </tr>
                 <tr>

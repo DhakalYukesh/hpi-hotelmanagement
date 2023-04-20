@@ -76,7 +76,6 @@
                 <div class="profile">
                     <span class="material-symbols-outlined profile-circle">account_circle</span>Profile
                     <div class="options">
-                        <a href="#">Profile</a>
                         <a href="{{ url('logout') }}">Logout</a>
                     </div>
                 </div>

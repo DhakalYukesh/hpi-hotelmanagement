@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
 use Illuminate\Http\Request;
 use App\Models\Staff;
 use App\Models\Department;
+use Illuminate\Support\Facades\Hash;
 
 class StaffController extends Controller
 {
@@ -37,7 +39,8 @@ class StaffController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+        //Saving in staff table
         $data = new Staff;
         $data->fname = $request->fname;
         $data->lname = $request->lname;
@@ -46,6 +49,14 @@ class StaffController extends Controller
         $data->salary_type = $request->salary_type;
         $data->salary_amount = $request->salary_amount;
         $data->save();
+        
+        //Saving in admin table
+        $admindata = new Admin;
+        $admindata->username = $request->fname;
+        $admindata->email = $request->email;
+        $admindata->password = sha1($request->password);
+        $admindata->type = $request->type;
+        $admindata->save();
 
         if($data){
             return redirect('admin/staff/create')->with('success', 'The staff has been added successfully!');
@@ -116,6 +127,12 @@ class StaffController extends Controller
         Staff::where('id',$id)->delete();
 
         return redirect('admin/staff')->with('success', 'The staff has been deleted successfully!');
+    }
+
+    public function staff_account(){
+        $staff = Staff::all();
+
+        return view('staff.staffAccount', ['staff' => $staff]);
     }
 }
 

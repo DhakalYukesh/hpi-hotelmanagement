@@ -12,4 +12,9 @@ class Staff extends Model
     function department(){
         return $this->belongsTo(Department::class);
     }
+
+    public function admin()
+    {
+        return $this->hasOne(Admin::class);
+    }
 }

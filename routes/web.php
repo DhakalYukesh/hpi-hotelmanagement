@@ -49,7 +49,9 @@ Route::resource('admin/room', RoomController::class);
 Route::get('admin/room/{id}/delete', [RoomController::class, 'destroy']);
 
 /* ------------- Customer Routing ------------ */
-Route::resource('admin/customer', CustomerController::class);
+Route::resource('admin/customer', CustomerController::class); 
+Route::post('registration/verify', [CustomerController::class, 'store']);
+Route::post('registration/verify/{verification_code}', [CustomerController::class, 'verify']);
 Route::get('admin/customer/{id}/delete', [CustomerController::class, 'destroy']);
 
 /* ------------- Archived Booking Routing ------------ */
@@ -78,6 +80,7 @@ Route::get('admin/food/{id}/delete', [FoodController::class, 'destroy']);
 Route::get('admin/booking/{id}/invoice', [BookingController::class, 'invoice']);
 
 /* ------------- Staff Routing ------------ */
+Route::get('admin/staff/account', [StaffController::class, 'staff_account']);
 Route::resource('admin/staff', StaffController::class);
 Route::get('admin/staff/{id}/delete', [StaffController::class, 'destroy']);
 

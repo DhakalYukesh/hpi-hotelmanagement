@@ -145,10 +145,10 @@
                     </td>
                 </tr>
                 <tr>
-                    <th>CheckOut Date</th>
+                    <th>Days of Stay</th>
                     <td>
                         <span class="danger">@error('lname') {{$message}} @enderror</span>
-                        <input value="{{$data->check_out}}" type="date" class="room-form" name="check_out">
+                        <input value="{{$data->num_days}}" type="text" class="room-form" name="num_days">
                     </td>
                 </tr>
                 <tr>
@@ -174,7 +174,7 @@
                 </tr> --}}
                 <tr>
                     <td colspan="2">
-                        <button type="submit" class="btn">Update Customers</button>
+                        <button type="submit" class="btn">Update Booking</button>
                     </td>
                 </tr>
             </table>

@@ -5,11 +5,12 @@
     <meta charset="utf-8">
     <title>Admin Dashboard</title>
 
-    @if (!Session::has('admin_data'))
+    @if (!session()->has('admin_type') || (session('admin_type') != 'admin' && session('admin_type') != 'staff'))
         <script type="text/javascript">
             window.location.href = "{{ url('admin') }}";
         </script>
     @endif
+
 
     <link href="{{ asset('public/res/adminStyle.css') }}" rel="stylesheet" />
     <link href="{{ asset('public/res/navigationStyle.css') }}" rel="stylesheet" />
@@ -25,8 +26,12 @@
         </div>
         <div class="account_circle">
             <div class="circle"></div>
-            <span class="material-symbols-outlined">account_circle</span>
-        </div>
+            <span class="material-symbols-outlined">account_circle  </span>
+            @if(Session::has('admin_data'))
+                {{ Session::get('admin_data')->username }}
+                ({{ Session::get('admin_data')->type }})
+            @endif
+        </div>        
     </header>
     <div class="main-container">
         <div class="nav-container">
@@ -66,13 +71,18 @@
                     </div>
                 </a>
 
-                <a href="{{ url('admin/staff') }}">
-                    <div class="nav-option option1">
-                        <span class="material-symbols-outlined">badge</span>
-                        <h3>Staffs</h3>
-                    </div>
-                </a>
+                @if (session()->has('admin_type'))
+                    @if (session('admin_type') == 'admin')
+                        <a href="{{ url('admin/staff') }}">
+                            <div class="nav-option option1">
+                                <span class="material-symbols-outlined">badge</span>
+                                <h3>Staffs</h3>
+                            </div>
+                        </a>
+                    @endif
+                @endif
 
+            
                 <a href="{{ url('admin/department') }}">
                     <div class="nav-option option1">
                         <span class="material-symbols-outlined">local_fire_department</span>
@@ -94,12 +104,17 @@
                     </div>
                 </a>
 
-                <a href="{{ url('admin/finance') }}">
-                    <div class="nav-option option1">
-                        <span class="material-symbols-outlined">account_balance</span>
-                        <h3>Finance</h3>
-                    </div>
-                </a>
+                @if (session()->has('admin_type'))
+                    @if (session('admin_type') == 'admin')
+                        <a href="{{ url('admin/finance') }}">
+                            <div class="nav-option option1">
+                                <span class="material-symbols-outlined">account_balance</span>
+                                <h3>Finance</h3>
+                            </div>
+                        </a>
+                    @endif
+                @endif
+
 
                 <a href="{{ url('admin/logout') }}">
                     <div class="nav-option logout">

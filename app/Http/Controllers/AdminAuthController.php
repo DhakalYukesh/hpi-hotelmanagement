@@ -23,7 +23,6 @@ class AdminAuthController extends Controller
 
     function loginCheck(Request $request)
     {
-
         $request->validate([
             'username' => 'required',
             'password' => 'required',
@@ -32,20 +31,29 @@ class AdminAuthController extends Controller
         $admin = Admin::where(['username' => $request->username, 'password' => sha1($request->password)])->count();
 
         if ($admin > 0) {
-            $admin_data = Admin::where(['username' => $request->username, 'password' => sha1($request->password)])->get();
+            $admin_data = Admin::where(['username' => $request->username, 'password' => sha1($request->password)])->first();
             session(['admin_data' => $admin_data]);
+
+            // add the type field to the admin_data object based on the username
+            if (!is_null($admin_data->type) && $admin_data->type == 'admin') {
+                session(['admin_type' => 'admin']);
+            } else {
+                session(['admin_type' => 'staff']);
+            }
 
             if ($request->has('rememberme')) {
                 Cookie::queue('adminUser', $request->username, 1440);
                 Cookie::queue('adminPass', $request->password, 1440);
             }
 
-            return redirect('admin/dashboard')->with('success', 'You have successfully loged in!');
+            return redirect('admin/dashboard')->with('success', 'You have successfully logged in!');
 
         } else {
             return redirect('admin')->with('fail', 'Something went wrong! Try again.');
         }
     }
+
+
 
     //Logout for the management panel.
 
